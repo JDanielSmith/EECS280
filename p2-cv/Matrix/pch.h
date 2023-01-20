@@ -40,10 +40,22 @@
 #pragma warning(disable: 4514) // '...': unreferenced inline function has been removed
 #pragma warning(disable: 5039) // '...': pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc. Undefined behavior may occur
 
+#pragma warning(push)
+#pragma warning(disable: 26814) // The const variable '...' can be computed at compile-time. Consider using constexpr (con.5).
+
 #include "Matrix.h"
+
+#pragma warning(pop)
+
 #include "Matrix_test_helpers.h"
 
 
 #pragma warning(disable: 4100) // '...': unreferenced formal parameter
+#pragma warning(disable: 26440) // Function '...' can be declared '...' (f.6).
+#pragma warning(disable: 26455) // Default constructor should not throw. Declare it '...' (f.6).
+#pragma warning(disable: 26432) // If you define or delete any default operation in the type 'class TestSuite', define or delete them all (c.21).
+#pragma warning(disable: 26472) // Don't use a static_cast for arithmetic conversions. Use brace initialization, gsl::narrow_cast or gsl::narrow (type.1).
+#pragma warning(disable: 26497) // You can attempt to make '...' constexpr unless it contains any undefined behavior (f.4).
+#pragma warning(disable: 26429) // Symbol '...' is never tested for nullness, it can be marked as not_null (f.23).
 
 #endif //PCH_H
