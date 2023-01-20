@@ -52,22 +52,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "starter-files", "starter-fi
 		starter-files\unit_test_framework.h = starter-files\unit_test_framework.h
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Matrix", "Matrix\Matrix.vcxproj", "{72B4B59F-2623-4DA6-B3C9-2D2D5872123D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Debug|x64.ActiveCfg = Debug|x64
 		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Debug|x64.Build.0 = Debug|x64
-		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Debug|x86.ActiveCfg = Debug|Win32
-		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Debug|x86.Build.0 = Debug|Win32
 		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Release|x64.ActiveCfg = Release|x64
 		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Release|x64.Build.0 = Release|x64
-		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Release|x86.ActiveCfg = Release|Win32
-		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Release|x86.Build.0 = Release|Win32
+		{72B4B59F-2623-4DA6-B3C9-2D2D5872123D}.Debug|x64.ActiveCfg = Debug|x64
+		{72B4B59F-2623-4DA6-B3C9-2D2D5872123D}.Debug|x64.Build.0 = Debug|x64
+		{72B4B59F-2623-4DA6-B3C9-2D2D5872123D}.Release|x64.ActiveCfg = Release|x64
+		{72B4B59F-2623-4DA6-B3C9-2D2D5872123D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

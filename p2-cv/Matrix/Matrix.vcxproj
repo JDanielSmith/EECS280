@@ -13,8 +13,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d6391c21-990d-4e71-8daa-2dd7ef929dfa}</ProjectGuid>
-    <RootNamespace>p2cv</RootNamespace>
+    <ProjectGuid>{72b4b59f-2623-4da6-b3c9-2d2d5872123d}</ProjectGuid>
+    <RootNamespace>Matrix</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -51,6 +51,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -67,6 +68,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -76,30 +78,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\pch.cpp">
+    <ClCompile Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\Matrix.cpp" />
+    <ClCompile Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\Matrix_public_test.cpp" />
+    <ClCompile Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\Matrix_tests.cpp" />
+    <ClCompile Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\Matrix_test_helpers.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Image.cpp" />
-    <ClCompile Include="Image_public_test.cpp" />
-    <ClCompile Include="Image_tests.cpp" />
-    <ClCompile Include="Image_test_helpers.cpp" />
-    <ClCompile Include="Matrix.cpp" />
-    <ClCompile Include="Matrix_public_test.cpp" />
-    <ClCompile Include="Matrix_tests.cpp" />
-    <ClCompile Include="Matrix_test_helpers.cpp" />
-    <ClCompile Include="p2-cv.cpp" />
-    <ClCompile Include="processing.cpp" />
-    <ClCompile Include="processing_public_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\pch.h" />
-    <ClInclude Include="Image.h" />
-    <ClInclude Include="Image_test_helpers.h" />
-    <ClInclude Include="Matrix.h" />
-    <ClInclude Include="Matrix_test_helpers.h" />
-    <ClInclude Include="processing.h" />
-    <ClInclude Include="unit_test_framework.h" />
+    <ClInclude Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\Matrix.h" />
+    <ClInclude Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\Matrix_test_helpers.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

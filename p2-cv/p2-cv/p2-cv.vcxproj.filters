@@ -48,6 +48,9 @@
     <ClCompile Include="processing_public_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="unit_test_framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
