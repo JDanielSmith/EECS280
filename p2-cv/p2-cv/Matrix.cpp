@@ -29,12 +29,14 @@ void Matrix_print(const Matrix* mat, std::ostream& os) {
 // EFFECTS:  Returns the width of the Matrix.
 int Matrix_width(const Matrix* mat) {
   assert(false); // TODO Replace with your implementation!
+  return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
 // EFFECTS:  Returns the height of the Matrix.
 int Matrix_height(const Matrix* mat) {
   assert(false); // TODO Replace with your implementation!
+  return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -42,6 +44,7 @@ int Matrix_height(const Matrix* mat) {
 // EFFECTS:  Returns the row of the element pointed to by ptr.
 int Matrix_row(const Matrix* mat, const int* ptr) {
   assert(false); // TODO Replace with your implementation!
+  return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -49,6 +52,7 @@ int Matrix_row(const Matrix* mat, const int* ptr) {
 // EFFECTS:  Returns the column of the element pointed to by ptr.
 int Matrix_column(const Matrix* mat, const int* ptr) {
   assert(false); // TODO Replace with your implementation!
+  return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -61,6 +65,7 @@ int Matrix_column(const Matrix* mat, const int* ptr) {
 //           at the given row and column.
 int* Matrix_at(Matrix* mat, int row, int column) {
   assert(false); // TODO Replace with your implementation!
+  return nullptr;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -71,6 +76,7 @@ int* Matrix_at(Matrix* mat, int row, int column) {
 //           the Matrix at the given row and column.
 const int* Matrix_at(const Matrix* mat, int row, int column) {
   assert(false); // TODO Replace with your implementation!
+  return nullptr;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -93,6 +99,7 @@ void Matrix_fill_border(Matrix* mat, int value) {
 // EFFECTS:  Returns the value of the maximum element in the Matrix
 int Matrix_max(const Matrix* mat) {
   assert(false); // TODO Replace with your implementation!
+  return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -108,6 +115,7 @@ int Matrix_max(const Matrix* mat) {
 int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
                                       int column_start, int column_end) {
   assert(false); // TODO Replace with your implementation!
+  return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -120,4 +128,5 @@ int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
 int Matrix_min_value_in_row(const Matrix* mat, int row,
                             int column_start, int column_end) {
   assert(false); // TODO Replace with your implementation!
+  return -1;
 }
