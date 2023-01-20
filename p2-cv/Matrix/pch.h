@@ -8,5 +8,14 @@
 #define PCH_H
 
 // add headers that you want to pre-compile here
+#include <string>
+#include <vector>
+#include <iostream>
+#include <cassert>
+
+#include "Matrix.h"
+#include "Matrix_test_helpers.h"
+
+#pragma warning(disable: 4100) // '...': unreferenced formal parameter
 
 #endif //PCH_H
