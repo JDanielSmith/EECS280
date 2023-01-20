@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "p2-cv", "p2-cv\p2-cv.vcxproj", "{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "starter-files", "starter-files", "{B100E79E-C949-4056-A096-ECF6BF5D6DEF}"
+	ProjectSection(SolutionItems) = preProject
+		starter-files\crabster.ppm = starter-files\crabster.ppm
+		starter-files\crabster_50x45.correct.ppm = starter-files\crabster_50x45.correct.ppm
+		starter-files\crabster_70x35.correct.ppm = starter-files\crabster_70x35.correct.ppm
+		starter-files\crabster_cost_correct.txt = starter-files\crabster_cost_correct.txt
+		starter-files\crabster_energy_correct.txt = starter-files\crabster_energy_correct.txt
+		starter-files\crabster_left.correct.ppm = starter-files\crabster_left.correct.ppm
+		starter-files\crabster_removed.correct.ppm = starter-files\crabster_removed.correct.ppm
+		starter-files\crabster_right.correct.ppm = starter-files\crabster_right.correct.ppm
+		starter-files\crabster_seam_correct.txt = starter-files\crabster_seam_correct.txt
+		starter-files\dog.ppm = starter-files\dog.ppm
+		starter-files\dog_4x5.correct.ppm = starter-files\dog_4x5.correct.ppm
+		starter-files\dog_cost_correct.txt = starter-files\dog_cost_correct.txt
+		starter-files\dog_energy_correct.txt = starter-files\dog_energy_correct.txt
+		starter-files\dog_left.correct.ppm = starter-files\dog_left.correct.ppm
+		starter-files\dog_removed.correct.ppm = starter-files\dog_removed.correct.ppm
+		starter-files\dog_right.correct.ppm = starter-files\dog_right.correct.ppm
+		starter-files\dog_seam_correct.txt = starter-files\dog_seam_correct.txt
+		starter-files\horses.ppm = starter-files\horses.ppm
+		starter-files\horses_300x382.correct.ppm = starter-files\horses_300x382.correct.ppm
+		starter-files\horses_400x250.correct.ppm = starter-files\horses_400x250.correct.ppm
+		starter-files\horses_cost_correct.txt = starter-files\horses_cost_correct.txt
+		starter-files\horses_energy_correct.txt = starter-files\horses_energy_correct.txt
+		starter-files\horses_left.correct.ppm = starter-files\horses_left.correct.ppm
+		starter-files\horses_removed.correct.ppm = starter-files\horses_removed.correct.ppm
+		starter-files\horses_right.correct.ppm = starter-files\horses_right.correct.ppm
+		starter-files\horses_seam_correct.txt = starter-files\horses_seam_correct.txt
+		starter-files\Image.cpp.starter = starter-files\Image.cpp.starter
+		starter-files\Image.h = starter-files\Image.h
+		starter-files\Image_public_test.cpp = starter-files\Image_public_test.cpp
+		starter-files\Image_tests.cpp.starter = starter-files\Image_tests.cpp.starter
+		starter-files\Image_test_helpers.cpp = starter-files\Image_test_helpers.cpp
+		starter-files\Image_test_helpers.h = starter-files\Image_test_helpers.h
+		starter-files\Makefile = starter-files\Makefile
+		starter-files\Matrix.cpp.starter = starter-files\Matrix.cpp.starter
+		starter-files\Matrix.h = starter-files\Matrix.h
+		starter-files\Matrix_public_test.cpp = starter-files\Matrix_public_test.cpp
+		starter-files\Matrix_tests.cpp.starter = starter-files\Matrix_tests.cpp.starter
+		starter-files\Matrix_test_helpers.cpp = starter-files\Matrix_test_helpers.cpp
+		starter-files\Matrix_test_helpers.h = starter-files\Matrix_test_helpers.h
+		starter-files\processing.cpp.starter = starter-files\processing.cpp.starter
+		starter-files\processing.h = starter-files\processing.h
+		starter-files\processing_public_tests.cpp = starter-files\processing_public_tests.cpp
+		starter-files\unit_test_framework.h = starter-files\unit_test_framework.h
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Debug|x64.ActiveCfg = Debug|x64
+		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Debug|x64.Build.0 = Debug|x64
+		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Debug|x86.ActiveCfg = Debug|Win32
+		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Debug|x86.Build.0 = Debug|Win32
+		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Release|x64.ActiveCfg = Release|x64
+		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Release|x64.Build.0 = Release|x64
+		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Release|x86.ActiveCfg = Release|Win32
+		{D6391C21-990D-4E71-8DAA-2DD7EF929DFA}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F414707-EA89-43C5-BD86-3E981E8AAE9D}
+	EndGlobalSection
+EndGlobal
