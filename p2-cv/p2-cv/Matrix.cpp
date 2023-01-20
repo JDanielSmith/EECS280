@@ -1,7 +1,9 @@
 // Project UID af1f95f547e44c8ea88730dfb185559d
 
-#include <cassert>
 #include "Matrix.h"
+
+#include <cassert>
+#include <stdexcept>
 
 // REQUIRES: mat points to a Matrix
 //           0 < width && width <= MAX_MATRIX_WIDTH
@@ -10,7 +12,16 @@
 // EFFECTS:  Initializes *mat as a Matrix with the given width and height.
 // NOTE:     Do NOT use new or delete here.
 void Matrix_init(Matrix* mat, int width, int height) {
-  assert(false); // TODO Replace with your implementation!
+    if (! ((0 < width) && (width <= MAX_MATRIX_WIDTH)) )
+    {
+        throw std::invalid_argument("width");
+    }
+    if (! ((0 < height) && (height <= MAX_MATRIX_HEIGHT)) )
+    {
+        throw std::invalid_argument("height");
+    }
+
+    assert(false); // TODO Replace with your implementation!
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -22,37 +33,66 @@ void Matrix_init(Matrix* mat, int width, int height) {
 //           by a newline. This means there will be an "extra" space at
 //           the end of each line.
 void Matrix_print(const Matrix* mat, std::ostream& os) {
-  assert(false); // TODO Replace with your implementation!
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    assert(false); // TODO Replace with your implementation!
 }
 
 // REQUIRES: mat points to an valid Matrix
 // EFFECTS:  Returns the width of the Matrix.
 int Matrix_width(const Matrix* mat) {
-  assert(false); // TODO Replace with your implementation!
-  return -1;
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    assert(false); // TODO Replace with your implementation!
+    return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
 // EFFECTS:  Returns the height of the Matrix.
 int Matrix_height(const Matrix* mat) {
-  assert(false); // TODO Replace with your implementation!
-  return -1;
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+      assert(false); // TODO Replace with your implementation!
+      return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
 //           ptr points to an element in the Matrix
 // EFFECTS:  Returns the row of the element pointed to by ptr.
 int Matrix_row(const Matrix* mat, const int* ptr) {
-  assert(false); // TODO Replace with your implementation!
-  return -1;
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    if (ptr == nullptr)
+    {
+        throw std::invalid_argument("ptr");
+    }
+
+    assert(false); // TODO Replace with your implementation!
+    return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
 //           ptr point to an element in the Matrix
 // EFFECTS:  Returns the column of the element pointed to by ptr.
 int Matrix_column(const Matrix* mat, const int* ptr) {
-  assert(false); // TODO Replace with your implementation!
-  return -1;
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    if (ptr == nullptr)
+    {
+        throw std::invalid_argument("ptr");
+    }
+    assert(false); // TODO Replace with your implementation!
+    return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -64,8 +104,20 @@ int Matrix_column(const Matrix* mat, const int* ptr) {
 // EFFECTS:  Returns a pointer to the element in the Matrix
 //           at the given row and column.
 int* Matrix_at(Matrix* mat, int row, int column) {
-  assert(false); // TODO Replace with your implementation!
-  return nullptr;
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    if (! ((0 <= row) && (row < Matrix_height(mat))) )
+    {
+        throw std::invalid_argument("row");
+    }
+    if (! ((0 <= column) && (column <= Matrix_width(mat))) )
+    {
+        throw std::invalid_argument("column");
+    }
+    assert(false); // TODO Replace with your implementation!
+    return nullptr;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -75,15 +127,31 @@ int* Matrix_at(Matrix* mat, int row, int column) {
 // EFFECTS:  Returns a pointer-to-const to the element in
 //           the Matrix at the given row and column.
 const int* Matrix_at(const Matrix* mat, int row, int column) {
-  assert(false); // TODO Replace with your implementation!
-  return nullptr;
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    if (! ((0 <= row) && (row < Matrix_height(mat))) )
+    {
+        throw std::invalid_argument("row");
+    }
+    if (! ((0 <= column) && (column <= Matrix_width(mat))) )
+    {
+        throw std::invalid_argument("column");
+    }
+    assert(false); // TODO Replace with your implementation!
+    return nullptr;
 }
 
 // REQUIRES: mat points to a valid Matrix
 // MODIFIES: *mat
 // EFFECTS:  Sets each element of the Matrix to the given value.
 void Matrix_fill(Matrix* mat, int value) {
-  assert(false); // TODO Replace with your implementation!
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    assert(false); // TODO Replace with your implementation!
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -92,14 +160,22 @@ void Matrix_fill(Matrix* mat, int value) {
 //           the given value. These are all elements in the first/last
 //           row or the first/last column.
 void Matrix_fill_border(Matrix* mat, int value) {
-  assert(false); // TODO Replace with your implementation!
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    assert(false); // TODO Replace with your implementation!
 }
 
 // REQUIRES: mat points to a valid Matrix
 // EFFECTS:  Returns the value of the maximum element in the Matrix
 int Matrix_max(const Matrix* mat) {
-  assert(false); // TODO Replace with your implementation!
-  return -1;
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    assert(false); // TODO Replace with your implementation!
+    return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -114,8 +190,20 @@ int Matrix_max(const Matrix* mat) {
 //           the leftmost one.
 int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
                                       int column_start, int column_end) {
-  assert(false); // TODO Replace with your implementation!
-  return -1;
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    if (! ((0 <= row) && (row < Matrix_height(mat))) )
+    {
+        throw std::invalid_argument("row");
+    }
+    if (! ((0 <= column_start) && (column_end <= Matrix_width(mat))) )
+    {
+        throw std::invalid_argument("column");
+    }
+    assert(false); // TODO Replace with your implementation!
+    return -1;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -127,6 +215,18 @@ int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
 //           column_start (inclusive) and column_end (exclusive).
 int Matrix_min_value_in_row(const Matrix* mat, int row,
                             int column_start, int column_end) {
-  assert(false); // TODO Replace with your implementation!
-  return -1;
+    if (mat == nullptr)
+    {
+        throw std::invalid_argument("mat");
+    }
+    if (!((0 <= row) && (row < Matrix_height(mat))))
+    {
+        throw std::invalid_argument("row");
+    }
+    if (!((0 <= column_start) && (column_end <= Matrix_width(mat))))
+    {
+        throw std::invalid_argument("column");
+    }
+    assert(false); // TODO Replace with your implementation!
+    return -1;
 }
