@@ -100,6 +100,7 @@
     <ClInclude Include="Matrix_test_helpers.h" />
     <ClInclude Include="processing.h" />
     <ClInclude Include="unit_test_framework.h" />
+    <ClInclude Include="unit_test_framework_.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
