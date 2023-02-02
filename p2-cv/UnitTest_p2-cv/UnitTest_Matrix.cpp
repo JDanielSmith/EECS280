@@ -10,7 +10,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTestp2cv
 {
-	TEST_CLASS(UnitTestMatrix)
+	TEST_CLASS(UnitTest_Matrix)
 	{
 	public:
 		

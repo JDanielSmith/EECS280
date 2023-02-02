@@ -8,8 +8,16 @@
 #define PCH_H
 
 // add headers that you want to pre-compile here
+#include <assert.h>
 #include <vector>
+#include <sstream>
+#include <iostream>
+#include <fstream>
 
 #include "Matrix.h"
+#include "Image.h"
+#include "processing.h"
+#include "Image_test_helpers.h"
+#include "Matrix_test_helpers.h"
 
 #endif //PCH_H

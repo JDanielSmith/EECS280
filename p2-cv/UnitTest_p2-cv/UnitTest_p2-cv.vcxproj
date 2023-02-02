@@ -95,6 +95,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\p2-cv\Image_test_helpers.cpp" />
     <ClCompile Include="..\p2-cv\Matrix_test_helpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -102,16 +103,18 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="UnitTestMatrix.cpp" />
+    <ClCompile Include="UnitTest_Matrix.cpp" />
+    <ClCompile Include="UnitTest_processing.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\p2-cv\Image_test_helpers.h" />
     <ClInclude Include="..\p2-cv\Matrix_test_helpers.h" />
     <ClInclude Include="p2-cv.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Matrix\Matrix.vcxproj">
-      <Project>{72b4b59f-2623-4da6-b3c9-2d2d5872123d}</Project>
+    <ProjectReference Include="..\processing\processing.vcxproj">
+      <Project>{33a14aaf-c811-4274-81d2-bc01527d1138}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
