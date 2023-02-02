@@ -33,7 +33,6 @@
 #include <algorithm>
 #include <exception>
 #include <stdexcept>
-#include <ciso646>
 
 #pragma warning(disable: 5045) // Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
 #pragma warning(disable: 4820) // '...': '...' bytes padding added after data member '...' 
