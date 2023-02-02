@@ -92,9 +92,6 @@
     <ClCompile Include="resize.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Matrix\Matrix.vcxproj">
-      <Project>{72b4b59f-2623-4da6-b3c9-2d2d5872123d}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\processing\processing.vcxproj">
       <Project>{33a14aaf-c811-4274-81d2-bc01527d1138}</Project>
     </ProjectReference>
