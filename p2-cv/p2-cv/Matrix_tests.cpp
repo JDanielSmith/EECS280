@@ -140,6 +140,72 @@ TEST(test_Matrix_fill_border) {
     ASSERT_EQUAL(*Matrix_at(mat, 3, 1), 1);
 }
 
+TEST(test_min_col_END_OF_COLUMN) {
+    std::vector<Matrix> v(1);
+    auto mat = &(v.front());
+
+    constexpr int width = 5;
+    constexpr int height = 6;
+    Matrix_init(mat, width, height);
+    Matrix_fill(mat, 99999);
+
+    constexpr int row = 1;
+    constexpr int column_start = 0;
+    constexpr int column_end = 5;
+    *Matrix_at(mat, row, 1) = 12;
+    int actual = Matrix_column_of_min_value_in_row(mat, row, column_start, column_end);
+    ASSERT_EQUAL(actual, 1);
+    actual = Matrix_column_of_min_value_in_row(mat, row, column_start, 2);
+    ASSERT_EQUAL(actual, 1);
+
+    *Matrix_at(mat, row, 4) = 9;
+    actual = Matrix_column_of_min_value_in_row(mat, row, column_start, column_end);
+    ASSERT_EQUAL(actual, 4);
+    actual = Matrix_column_of_min_value_in_row(mat, row, column_start, 5);
+    ASSERT_EQUAL(actual, 4);
+
+    *Matrix_at(mat, row, 2) = 14;
+    actual = Matrix_column_of_min_value_in_row(mat, row, column_start, column_end);
+    ASSERT_EQUAL(actual, 4);
+    actual = Matrix_column_of_min_value_in_row(mat, row, column_start, 3);
+    ASSERT_EQUAL(actual, 1);
+}
+
+
+TEST(test_min_value_END_OF_COLUMN) {
+    std::vector<Matrix> v(1);
+    auto mat = &(v.front());
+
+    constexpr int width = 5;
+    constexpr int height = 45;
+    Matrix_init(mat, width, height);
+    Matrix_fill(mat, 45);
+    Matrix_fill_border(mat, 21);
+
+    constexpr int row = 1;
+    constexpr int column_start = 0;
+    constexpr int column_end = 5;
+
+    *Matrix_at(mat, row, 1) = 12;
+    int actual = Matrix_min_value_in_row(mat, row, 1, 1 + 1);
+    ASSERT_EQUAL(actual, 12);
+    actual = Matrix_min_value_in_row(mat, row, column_start, column_end);
+    ASSERT_EQUAL(actual, 12);
+
+
+    *Matrix_at(mat, row, 4) = 9;
+    actual = Matrix_min_value_in_row(mat, row, 4, 4 + 1);
+    ASSERT_EQUAL(actual, 9);
+    actual = Matrix_min_value_in_row(mat, row, column_start, column_end);
+    ASSERT_EQUAL(actual, 9);
+
+    *Matrix_at(mat, 1, 2) = 14;
+    actual = Matrix_min_value_in_row(mat, row, 2, 2 + 1);
+    ASSERT_EQUAL(actual, 14);
+    actual = Matrix_min_value_in_row(mat, row, column_start, column_end);
+    ASSERT_EQUAL(actual, 9);
+}
+
 
 // NOTE: The unit test framework tutorial in Lab 2 originally
 // had a semicolon after TEST_MAIN(). Although including and

@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
+#include <algorithm>
 
 // REQUIRES: mat points to a Matrix
 //           0 < width && width <= MAX_MATRIX_WIDTH
@@ -262,8 +263,16 @@ int Matrix_max(const Matrix* mat) {
     {
         throw std::invalid_argument("mat");
     }
-    assert(false); // TODO Replace with your implementation!
-    return -1;
+
+    int retval = INT_MIN;
+    for (int r = 0; r < Matrix_height(mat); r++)
+    {
+        for (int c = 0; c < Matrix_width(mat); c++)
+        {
+            retval = std::max(retval, *Matrix_at(mat, r, c));
+        }
+    }
+    return retval;
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -278,20 +287,16 @@ int Matrix_max(const Matrix* mat) {
 //           the leftmost one.
 int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
                                       int column_start, int column_end) {
-    if (mat == nullptr)
+    const auto min = Matrix_min_value_in_row(mat, row, column_start, column_end);
+    for (int c = column_start; c < column_end; c++)
     {
-        throw std::invalid_argument("mat");
+        if (min == *Matrix_at(mat, row, c))
+        {
+            return c;
+        }
     }
-    if (! ((0 <= row) && (row < Matrix_height(mat))) )
-    {
-        throw std::invalid_argument("row");
-    }
-    if (! ((0 <= column_start) && (column_end <= Matrix_width(mat))) )
-    {
-        throw std::invalid_argument("column");
-    }
-    assert(false); // TODO Replace with your implementation!
-    return -1;
+
+    throw std::logic_error("Matrix_column_of_min_value_in_row");
 }
 
 // REQUIRES: mat points to a valid Matrix
@@ -311,10 +316,23 @@ int Matrix_min_value_in_row(const Matrix* mat, int row,
     {
         throw std::invalid_argument("row");
     }
-    if (!((0 <= column_start) && (column_end <= Matrix_width(mat))))
+    if (!(0 <= column_start))
     {
-        throw std::invalid_argument("column");
+        throw std::invalid_argument("column_start");
     }
-    assert(false); // TODO Replace with your implementation!
-    return -1;
+    if (!(column_end <= Matrix_width(mat)))
+    {
+        throw std::invalid_argument("column_end");
+    }
+    if (!(column_start < column_end))
+    {
+        throw std::invalid_argument("column_start");
+    }
+
+    int retval = INT_MAX;
+    for (int c = column_start; c < column_end; c++)
+    {
+        retval = std::min(retval, *Matrix_at(mat, row, c));
+    }
+    return retval;
 }
