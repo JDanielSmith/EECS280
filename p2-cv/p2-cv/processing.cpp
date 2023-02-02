@@ -322,7 +322,18 @@ void seam_carve_width(Image *img, int newWidth) {
 //           then applying seam_carve_width(img, newHeight), then rotating
 //           90 degrees right.
 void seam_carve_height(Image *img, int newHeight) {
-  assert(false); // TODO Replace with your implementation!
+    if (img == nullptr)
+    {
+        throw std::invalid_argument("img");
+    }
+    if (!((0 < newHeight) && (newHeight <= Image_height(img))))
+    {
+        throw std::invalid_argument("newWidth");
+    }
+
+    rotate_left(img);
+    seam_carve_width(img, newHeight);
+    rotate_right(img);
 }
 
 // REQUIRES: img points to a valid Image
@@ -334,5 +345,19 @@ void seam_carve_height(Image *img, int newHeight) {
 // NOTE:     This is equivalent to applying seam_carve_width(img, newWidth)
 //           and then applying seam_carve_height(img, newHeight).
 void seam_carve(Image *img, int newWidth, int newHeight) {
-  assert(false); // TODO Replace with your implementation!
+    if (img == nullptr)
+    {
+        throw std::invalid_argument("img");
+    }
+    if (!((0 < newWidth) && (newWidth <= Image_width(img))))
+    {
+        throw std::invalid_argument("newWidth");
+    }
+    if (!((0 < newHeight) && (newHeight <= Image_height(img))))
+    {
+        throw std::invalid_argument("newWidth");
+    }
+
+    seam_carve_width(img, newWidth);
+    seam_carve_height(img, newHeight);
 }

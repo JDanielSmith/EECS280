@@ -90,12 +90,10 @@ namespace UnitTestp2cv
             // Test remove seam
             test_remove_seam(img, seam, prefix);
 
-            /*
             // Test full seam carving algorithm on various sizes
             for (int i = 0; i < num_sizes; ++i) {
                 test_seam_carve(img, prefix, sizes[2 * i], sizes[2 * i + 1]);
             }
-            */
             clog << prefix << " tests PASS" << endl << endl;
         }
 
