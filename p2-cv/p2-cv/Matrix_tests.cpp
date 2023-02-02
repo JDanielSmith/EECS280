@@ -171,7 +171,6 @@ TEST(test_min_col_END_OF_COLUMN) {
     ASSERT_EQUAL(actual, 1);
 }
 
-
 TEST(test_min_value_END_OF_COLUMN) {
     std::vector<Matrix> v(1);
     auto mat = &(v.front());

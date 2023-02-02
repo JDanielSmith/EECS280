@@ -47,8 +47,6 @@
 
 #pragma warning(pop)
 
-#include "Matrix_test_helpers.h"
-
 
 #pragma warning(disable: 4100) // '...': unreferenced formal parameter
 #pragma warning(disable: 26440) // Function '...' can be declared '...' (f.6).
