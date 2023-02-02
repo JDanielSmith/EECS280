@@ -133,8 +133,53 @@ void compute_energy_matrix(const Image* img, Matrix* energy) {
 //           size as the given energy Matrix, and then the cost matrix is
 //           computed and written into it.
 //           See the project spec for details on computing the cost matrix.
+inline int min(int i, int j, int k) noexcept
+{
+    const auto min_ij = std::min(i, j);
+    return std::min(min_ij, k);
+}
+static void compute_cost(const Matrix* energy, Matrix* cost, int r, int c)
+{
+    const auto energy_rc = *Matrix_at(energy, r, c);
+    const auto cost_c_1 = c <= 0 ? INT_MAX : *Matrix_at(cost, r - 1, c - 1); // ignore first column
+    const auto cost_c = *Matrix_at(cost, r - 1, c);
+    const auto cost_c1 = c >= Matrix_width(cost) - 1 ? INT_MAX : *Matrix_at(cost, r - 1, c + 1); // ignore last column
+
+    const auto cost_rc = energy_rc + min(cost_c_1, cost_c, cost_c1);
+    *Matrix_at(cost, r, c) = cost_rc;
+}
 void compute_vertical_cost_matrix(const Matrix* energy, Matrix *cost) {
-  assert(false); // TODO Replace with your implementation!
+    if (energy == nullptr)
+    {
+        throw std::invalid_argument("img");
+    }
+    if (cost == nullptr)
+    {
+        throw std::invalid_argument("energy");
+    }
+    if (energy == cost)
+    {
+        throw std::logic_error("energy == cost");
+    }
+
+    // "Initialize the cost Matrix with the same size as the energy Matrix"
+    Matrix_init(cost, Matrix_width(energy), Matrix_height(energy));
+
+    // "Fill in costs for the first row (index 0). The cost for these pixels is just the energy."
+    int row = 0;
+    for (int column = 0; column < Matrix_width(energy); column++)
+    {
+        *Matrix_at(cost, row, column) = *Matrix_at(energy, row, column);
+    }
+
+    // "Loop through the rest of the pixels in the Matrix, row by row, starting with the second row ..."
+    for (row = 1; row < Matrix_height(energy); row++)
+    {
+        for (int column = 0; column < Matrix_width(energy); column++)
+        {
+            compute_cost(energy, cost, row, column);
+        }
+    }
 }
 
 
@@ -153,12 +198,11 @@ void compute_vertical_cost_matrix(const Matrix* energy, Matrix *cost) {
 // NOTE:     You should compute the seam in reverse order, starting
 //           with the bottom of the image and proceeding to the top,
 //           as described in the project spec.
-void find_minimal_vertical_seam(const Matrix* cost, int seam_[]) {
+void find_minimal_vertical_seam(const Matrix* cost, int seam[]) {
     if (cost == nullptr)
     {
         throw std::invalid_argument("cost");
     }
-    const std::span<int> seam(seam_, Matrix_height(cost));
 
     int column_start = 0;
     int column_end = Matrix_width(cost) - 1;

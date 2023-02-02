@@ -52,12 +52,12 @@ namespace UnitTestp2cv
             compute_energy_matrix(img, energy);
             test_energy(energy, prefix);
 
-            /*
             // Test cost
             Matrix* cost = new Matrix;
             compute_vertical_cost_matrix(energy, cost);
             test_cost(cost, prefix);
 
+            /*
             // Test find seam
             int seam[MAX_MATRIX_HEIGHT];
             find_minimal_vertical_seam(cost, seam);
