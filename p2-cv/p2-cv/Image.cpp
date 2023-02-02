@@ -44,7 +44,38 @@ void Image_init(Image* img, int width, int height) {
 // NOTE:     See the project spec for a discussion of PPM format.
 // NOTE:     Do NOT use new or delete here.
 void Image_init(Image* img, std::istream& is) {
-  assert(false); // TODO Replace with your implementation!
+    if (img == nullptr)
+    {
+        throw std::invalid_argument("img");
+    }
+
+    std::string p3;
+    is >> p3;
+    if (p3 != "P3")
+    {
+        throw std::invalid_argument("is is not a PPM file!");
+    }
+
+    int width, height;
+    is >> width >> height;
+    Image_init(img, width, height);
+
+    int RGB_intensities;
+    is >> RGB_intensities;
+    if (RGB_intensities != 255)
+    {
+        throw std::invalid_argument("is is not a PPM file!");
+    }
+
+    for (int row = 0; row < Image_height(img); row++)
+    {
+        for (int column = 0; column < Image_width(img); column++)
+        {
+            Pixel color;
+            is >> color.r >> color.g >> color.b;
+            Image_set_pixel(img, row, column, color);
+        }
+    }
 }
 
 // REQUIRES: img points to a valid Image
@@ -61,7 +92,24 @@ void Image_init(Image* img, std::istream& is) {
 //           "extra" space at the end of each line. See the project spec
 //           for an example.
 void Image_print(const Image* img, std::ostream& os) {
-  assert(false); // TODO Replace with your implementation!
+    if (img == nullptr)
+    {
+        throw std::invalid_argument("img");
+    }
+
+    os << "P3\n";
+    os << Image_width(img) << " " << Image_height(img) << "\n";
+    os << "255\n";
+
+    for (int row = 0; row < Image_height(img); row++)
+    {
+        for (int column = 0; column < Image_width(img); column++)
+        {
+            const auto color = Image_get_pixel(img, row, column);
+            os << color.r << " " << color.g << " " << color.b << " ";
+        }
+        os << "\n";
+    }
 }
 
 // REQUIRES: img points to a valid Image

@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 #include "processing.h"
 #include "Image_test_helpers.h"
 #include "Matrix_test_helpers.h"
@@ -14,13 +15,64 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
 
+static const string OUT_PPM_EXT = ".out.ppm";
+static const string OUT_TXT_EXT = ".out.txt";
+
 namespace UnitTestp2cv
 {
 	TEST_CLASS(UnitTest_processing)
 	{
 	public:
-        const string OUT_PPM_EXT = ".out.ppm";
-        const string OUT_TXT_EXT = ".out.txt";
+        TEST(test_all_dog)
+        {
+            int dog_sizes[] = { 4, 5 };
+            test_all("dog", dog_sizes, 1);
+        }
+        TEST(test_all_crabster)
+        {
+            int crabster_sizes[] = { 50, 45, 70, 35 };
+            //test_all("crabster", crabster_sizes, 2);
+        }
+        TEST(test_all_horses)
+        {
+            int horses_sizes[] = { 300, 382, 400, 250 };
+            //test_all("horses", horses_sizes, 2);
+        }
+
+        void test_all(string prefix, int sizes[], int num_sizes) {
+            std::vector<Image> imgs(1);
+            auto img = &(imgs[0]);
+            load_image(img, prefix + ".ppm");
+
+            // Test rotate
+            test_rotate(img, prefix);
+
+            /*
+            // Test energy
+            Matrix* energy = new Matrix;
+            compute_energy_matrix(img, energy);
+            test_energy(energy, prefix);
+
+            // Test cost
+            Matrix* cost = new Matrix;
+            compute_vertical_cost_matrix(energy, cost);
+            test_cost(cost, prefix);
+
+            // Test find seam
+            int seam[MAX_MATRIX_HEIGHT];
+            find_minimal_vertical_seam(cost, seam);
+            test_find_seam(seam, Matrix_height(cost), prefix);
+
+            // Test remove seam
+            test_remove_seam(img, seam, prefix);
+
+            // Test full seam carving algorithm on various sizes
+            for (int i = 0; i < num_sizes; ++i) {
+                test_seam_carve(img, prefix, sizes[2 * i], sizes[2 * i + 1]);
+            }
+            */
+            clog << prefix << " tests PASS" << endl << endl;
+        }
 
         void test_rotate(const Image* img, string prefix) {
             Image* rotated_img = new Image;
@@ -156,11 +208,14 @@ namespace UnitTestp2cv
         }
 
         static void load_image(Image* img, string filename) {
+            static const std::filesystem::path p(R"(C:\Users\jdsmith\source\repos\eecs280\p2-cv\starter-files)"); // TODO
+            std::filesystem::current_path(p);
+
             ifstream fin;
             fin.open(filename.c_str());
 
             if (!fin.is_open()) {
-                cout << "Unable to open " << filename << endl;
+                cerr << "Unable to open " << filename << endl;
                 exit(EXIT_FAILURE);
             }
 

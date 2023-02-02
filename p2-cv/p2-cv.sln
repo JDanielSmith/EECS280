@@ -62,6 +62,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resize", "resize\resize.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Image", "Image\Image.vcxproj", "{A3671D0B-673C-45D8-B6CE-94DF40693627}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{840E1397-9CDB-41ED-9EAC-183DB20AB6AB}"
+	ProjectSection(SolutionItems) = preProject
+		p2-cv.runsettings = p2-cv.runsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
