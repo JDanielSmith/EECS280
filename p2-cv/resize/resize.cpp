@@ -4,6 +4,7 @@
 #include <string>
 #include <cassert>
 #include <cstring>
+#include <filesystem>
 
 #include "Image.h"
 #include "processing.h"
@@ -37,11 +38,11 @@ static int validate(const Image& img, int width, int &height)
 	return EXIT_SUCCESS;
 }
 
-static int resize(const std::string& in_filename, const std::string& out_filename, int width, int height)
+static int resize(const std::filesystem::path& in, const std::filesystem::path& out, int width, int height)
 {
-	std::ifstream fin(in_filename);
+	std::ifstream fin(in);
 	if (!fin.is_open()) {
-		std::cerr << "Error opening file: " << in_filename << "\n";
+		std::cerr << "Error opening file: " << in << "\n";
 		return EXIT_FAILURE;
 	}
 
@@ -55,10 +56,10 @@ static int resize(const std::string& in_filename, const std::string& out_filenam
 	}
 
 
-	//seam_carve(img, width, height); // TODO
+	seam_carve(img, width, height); // TODO
 
 
-	std::ofstream off(out_filename);
+	std::ofstream off(out);
 	Image_print(img, off);
 
 	return EXIT_SUCCESS;
