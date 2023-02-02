@@ -1,20 +1,102 @@
-// resize.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <string>
+#include <cassert>
+#include <cstring>
 
-int main()
+#include "Image.h"
+#include "processing.h"
+
+static std::string usage(std::string me = "resize.exe") // TODO: `basename $0`
 {
-    std::cout << "Hello World!\n";
+	std::string retval = "Usage: " + me + " IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n"
+		"WIDTH and HEIGHT must be less than or equal to original";
+	return retval;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+static int validate(const Image& img, int width, int &height)
+{
+	// "The desired width is ... less than or equal to the original width of the input image."
+	if (!(width <= Image_width(&img)))
+	{
+		std::cerr << usage() << "\n";
+		return EXIT_FAILURE;
+	}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+	if (height < 0) // optional command-line argument
+	{
+		height = Image_height(&img);
+	}
+	// "The desired height is ... less than or equal to the original height of the input image."
+	if (!(height <= Image_height(&img)))
+	{
+		std::cerr << usage() << "\n";
+		return EXIT_FAILURE;
+	}
+	return EXIT_SUCCESS;
+}
+
+static int resize(const std::string& in_filename, const std::string& out_filename, int width, int height)
+{
+	std::ifstream fin(in_filename);
+	if (!fin.is_open()) {
+		std::cerr << "Error opening file: " << in_filename << "\n";
+		return EXIT_FAILURE;
+	}
+
+	Image* img = new Image;
+	Image_init(img, fin);
+
+	const auto retval = validate(*img, width, height);
+	if (retval != EXIT_SUCCESS)
+	{
+		return retval;
+	}
+
+
+	//seam_carve(img, width, height); // TODO
+
+
+	std::ofstream off(out_filename);
+	Image_print(img, off);
+
+	return EXIT_SUCCESS;
+}
+
+int main(int argc, char* argv[])
+{
+	// "There are 4 or 5 arguments, including the executable name itself (i.e. argv[0])."
+	if (!((argc == 4) || (argc == 5)))
+	{
+		std::cerr << usage() << "\n";
+		return EXIT_FAILURE;
+	}
+
+	// see usage, above
+	const std::string width_(argv[3]);
+	const auto width = atoi(width_.c_str());
+	// "The desired width is greater than 0 ..."
+	if (width < 0)
+	{
+		std::cerr << usage() << "\n";
+		return EXIT_FAILURE;
+	}
+
+	int height = -1; // HEIGHT is optional
+	if (argc == 5)
+	{
+		const std::string height_(argv[4]);
+		height = atoi(height_.c_str());
+		// "The desired width is greater than 0 ..."
+		if (height < 0)
+		{
+			std::cerr << usage() << "\n";
+			return EXIT_FAILURE;
+		}
+	}
+	
+	const std::string in_filename(argv[1]);
+	const std::string out_filename(argv[2]);
+	return resize(in_filename, out_filename, width, height);
+}
