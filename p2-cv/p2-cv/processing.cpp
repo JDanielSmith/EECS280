@@ -78,7 +78,8 @@ static int squared_difference(Pixel p1, Pixel p2) {
 // ------------------------------------------------------------------
 // You may change code below this line!
 
-
+#include <span>
+#include <stdexcept>
 
 // REQUIRES: img points to a valid Image.
 //           energy points to a Matrix.
@@ -123,8 +124,33 @@ void compute_vertical_cost_matrix(const Matrix* energy, Matrix *cost) {
 // NOTE:     You should compute the seam in reverse order, starting
 //           with the bottom of the image and proceeding to the top,
 //           as described in the project spec.
-void find_minimal_vertical_seam(const Matrix* cost, int seam[]) {
-  assert(false); // TODO Replace with your implementation!
+void find_minimal_vertical_seam(const Matrix* cost, int seam_[]) {
+    if (cost == nullptr)
+    {
+        throw std::invalid_argument("cost");
+    }
+    const std::span<int> seam(seam_, Matrix_height(cost));
+
+    int column_start = 0;
+    int column_end = Matrix_width(cost) - 1;
+
+    int row = Matrix_height(cost) - 1;
+    // "First, find the minimum cost pixel in the bottom row."
+    seam[row] = Matrix_column_of_min_value_in_row(cost, row, column_start, column_end);
+    row--;
+
+    // "Now, we work our way up, ..."
+    for (; row >= 0; row--)
+    {
+        const auto previous_column = seam[row + 1];
+        // "Don't look outside the bounds!"
+        column_start = previous_column - 1;
+        column_start = column_start < 0 ? 0 : column_start;
+        column_end = previous_column + 1;
+        column_end = column_end >= Matrix_width(cost) ? Matrix_width(cost) - 1 : column_end;
+
+        seam[row] = Matrix_column_of_min_value_in_row(cost, row, column_start, column_end);
+    }
 }
 
 
