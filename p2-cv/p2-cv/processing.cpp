@@ -90,8 +90,37 @@ static int squared_difference(Pixel p1, Pixel p2) {
 //           image is computed and written into it.
 //           See the project spec for details on computing the energy matrix.
 void compute_energy_matrix(const Image* img, Matrix* energy) {
-  assert(false); // TODO Replace with your implementation!
-  assert(squared_difference(Pixel(), Pixel())); // TODO delete me, this is here to make it compile
+    if (img == nullptr)
+    {
+        throw std::invalid_argument("img");
+    }
+    if (energy == nullptr)
+    {
+        throw std::invalid_argument("energy");
+    }
+
+    // "Initialize the energy Matrix with the same size as the Image and fill it with zeros."
+    Matrix_init(energy, Image_width(img), Image_height(img));
+    Matrix_fill(energy, 0);
+
+    // "Compute the energy for each non-border pixel ..."
+    for (int row = 1; row < Image_height(img) - 1; row++)
+    {
+        for (int column = 1; column < Image_width(img) - 1; column++)
+        {
+            const auto N = Image_get_pixel(img, row - 1, column);
+            const auto S = Image_get_pixel(img, row + 1, column);
+            const auto W = Image_get_pixel(img, row, column - 1);
+            const auto E = Image_get_pixel(img, row, column + 1);
+
+            const auto energy_X = squared_difference(N, S) + squared_difference(W, E);
+            *Matrix_at(energy, row, column) = energy_X;
+        }
+    }
+
+    // "Find the maximum energy so far, and use it to fill in the border pixels."
+    const auto maximum_energy = Matrix_max(energy);
+    Matrix_fill_border(energy, maximum_energy);
 }
 
 

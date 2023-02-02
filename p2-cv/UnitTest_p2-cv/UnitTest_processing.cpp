@@ -47,12 +47,12 @@ namespace UnitTestp2cv
             // Test rotate
             test_rotate(img, prefix);
 
-            /*
             // Test energy
             Matrix* energy = new Matrix;
             compute_energy_matrix(img, energy);
             test_energy(energy, prefix);
 
+            /*
             // Test cost
             Matrix* cost = new Matrix;
             compute_vertical_cost_matrix(energy, cost);
