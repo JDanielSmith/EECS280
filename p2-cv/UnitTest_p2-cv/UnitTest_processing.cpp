@@ -86,10 +86,11 @@ namespace UnitTestp2cv
             find_minimal_vertical_seam(cost, seam);
             test_find_seam(seam, Matrix_height(cost), prefix);
 
-            /*
+
             // Test remove seam
             test_remove_seam(img, seam, prefix);
 
+            /*
             // Test full seam carving algorithm on various sizes
             for (int i = 0; i < num_sizes; ++i) {
                 test_seam_carve(img, prefix, sizes[2 * i], sizes[2 * i + 1]);

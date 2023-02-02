@@ -245,8 +245,41 @@ void find_minimal_vertical_seam(const Matrix* cost, int seam_[]) {
 //           See the project spec for details on removing a vertical seam.
 // NOTE:     Use the new operator here to create the smaller Image,
 //           and then use delete when you are done with it.
+static void remove_column(const Image* img, Image* copy, int row, int column_to_remove)
+{
+    int column = 0;
+    int copy_column = 0;
+    while (column < Image_width(img))
+    {
+        if (column != column_to_remove)
+        {
+            const auto color = Image_get_pixel(img, row, column);
+            Image_set_pixel(copy, row, copy_column, color);
+            copy_column++;
+        }
+        column++;
+    }
+}
+
 void remove_vertical_seam(Image *img, const int seam[]) {
-  assert(false); // TODO Replace with your implementation!
+    if (img == nullptr)
+    {
+        throw std::invalid_argument("img");
+    }
+
+    // "You should copy into a smaller auxiliary Image ..."
+    std::vector<Image> copy_(1);
+    auto copy = &(copy_[0]);
+    Image_init(copy, Image_width(img) - 1, Image_height(img));
+
+    for (int row = 0; row < Image_height(img); row++)
+    {
+        const auto column_to_remove = seam[row];
+        remove_column(img, copy, row, column_to_remove);
+    }
+
+    // "... and then back into the original"
+    *img = *copy;
 }
 
 
