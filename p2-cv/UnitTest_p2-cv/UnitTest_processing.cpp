@@ -23,6 +23,30 @@ namespace UnitTestp2cv
 	TEST_CLASS(UnitTest_processing)
 	{
 	public:
+        TEST(test_find_minimal_vertical_seam)
+        {
+            std::vector<Matrix> m(1);
+            auto& mat = m[0];
+
+            Matrix_init(&mat, 5, 5);
+            Matrix_fill(&mat, 99999);
+
+            *Matrix_at(&mat, 4, 3) = 1;
+            *Matrix_at(&mat, 3, 4) = 1;
+            *Matrix_at(&mat, 2, 3) = 1;
+            *Matrix_at(&mat, 1, 3) = 1;
+            *Matrix_at(&mat, 1, 4) = 1;
+            *Matrix_at(&mat, 0, 2) = 1;
+
+            int seam[MAX_MATRIX_HEIGHT];
+            find_minimal_vertical_seam(&mat, seam);
+            ASSERT_EQUAL(seam[4], 3);
+            ASSERT_EQUAL(seam[3], 4);
+            ASSERT_EQUAL(seam[2], 3);
+            ASSERT_EQUAL(seam[1], 3);
+            ASSERT_EQUAL(seam[0], 2);
+        }
+
         TEST(test_all_dog)
         {
             int dog_sizes[] = { 4, 5 };
@@ -31,7 +55,7 @@ namespace UnitTestp2cv
         TEST(test_all_crabster)
         {
             int crabster_sizes[] = { 50, 45, 70, 35 };
-            //test_all("crabster", crabster_sizes, 2);
+            test_all("crabster", crabster_sizes, 2);
         }
         TEST(test_all_horses)
         {
@@ -57,12 +81,12 @@ namespace UnitTestp2cv
             compute_vertical_cost_matrix(energy, cost);
             test_cost(cost, prefix);
 
-            /*
             // Test find seam
             int seam[MAX_MATRIX_HEIGHT];
             find_minimal_vertical_seam(cost, seam);
             test_find_seam(seam, Matrix_height(cost), prefix);
 
+            /*
             // Test remove seam
             test_remove_seam(img, seam, prefix);
 

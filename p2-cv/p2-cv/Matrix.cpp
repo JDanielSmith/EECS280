@@ -288,7 +288,7 @@ int Matrix_max(const Matrix* mat) {
 int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
                                       int column_start, int column_end) {
     const auto min = Matrix_min_value_in_row(mat, row, column_start, column_end);
-    for (int c = column_start; c < column_end; c++)
+    for (int c = column_start; c <= column_end; c++)
     {
         if (min == *Matrix_at(mat, row, c))
         {
@@ -330,7 +330,7 @@ int Matrix_min_value_in_row(const Matrix* mat, int row,
     }
 
     int retval = INT_MAX;
-    for (int c = column_start; c < column_end; c++)
+    for (int c = column_start; c <= column_end; c++)
     {
         retval = std::min(retval, *Matrix_at(mat, row, c));
     }
