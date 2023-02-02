@@ -78,7 +78,7 @@ static int squared_difference(Pixel p1, Pixel p2) {
 // ------------------------------------------------------------------
 // You may change code below this line!
 
-#include <span>
+#include <vector>
 #include <stdexcept>
 
 // REQUIRES: img points to a valid Image.
@@ -198,11 +198,12 @@ void compute_vertical_cost_matrix(const Matrix* energy, Matrix *cost) {
 // NOTE:     You should compute the seam in reverse order, starting
 //           with the bottom of the image and proceeding to the top,
 //           as described in the project spec.
-void find_minimal_vertical_seam(const Matrix* cost, int seam[]) {
+void find_minimal_vertical_seam(const Matrix* cost, int seam_[]) {
     if (cost == nullptr)
     {
         throw std::invalid_argument("cost");
     }
+    std::vector<int> seam(Matrix_height(cost), -99999);
 
     int column_start = 0;
     int column_end = Matrix_width(cost) - 1;
@@ -223,6 +224,11 @@ void find_minimal_vertical_seam(const Matrix* cost, int seam[]) {
         column_end = column_end >= Matrix_width(cost) ? Matrix_width(cost) - 1 : column_end;
 
         seam[row] = Matrix_column_of_min_value_in_row(cost, row, column_start, column_end);
+    }
+
+    for (size_t i = 0; i < seam.size(); i++)
+    {
+        seam_[i] = seam[i];
     }
 }
 
