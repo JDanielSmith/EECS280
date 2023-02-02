@@ -18,7 +18,7 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\p2-cv\processing.cpp">
+    <ClCompile Include="..\p2-cv\Matrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -26,7 +26,7 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\p2-cv\processing.h">
+    <ClInclude Include="..\p2-cv\Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -43,7 +43,7 @@
 #pragma warning(push)
 #pragma warning(disable: 26814) // The const variable '...' can be computed at compile-time. Consider using constexpr (con.5).
 
-#include "processing.h"
+#include "Image.h"
 
 #pragma warning(pop)
 

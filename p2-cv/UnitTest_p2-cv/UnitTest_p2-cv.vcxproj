@@ -113,6 +113,12 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Image\Image.vcxproj">
+      <Project>{a3671d0b-673c-45d8-b6ce-94df40693627}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Matrix\Matrix.vcxproj">
+      <Project>{72b4b59f-2623-4da6-b3c9-2d2d5872123d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\processing\processing.vcxproj">
       <Project>{33a14aaf-c811-4274-81d2-bc01527d1138}</Project>
     </ProjectReference>

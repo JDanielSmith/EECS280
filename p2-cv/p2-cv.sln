@@ -60,6 +60,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "processing", "processing\pr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resize", "resize\resize.vcxproj", "{ED3DC1C0-E96E-4DD6-9F7A-6B3C4314137E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Image", "Image\Image.vcxproj", "{A3671D0B-673C-45D8-B6CE-94DF40693627}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -86,6 +88,10 @@ Global
 		{ED3DC1C0-E96E-4DD6-9F7A-6B3C4314137E}.Debug|x64.Build.0 = Debug|x64
 		{ED3DC1C0-E96E-4DD6-9F7A-6B3C4314137E}.Release|x64.ActiveCfg = Release|x64
 		{ED3DC1C0-E96E-4DD6-9F7A-6B3C4314137E}.Release|x64.Build.0 = Release|x64
+		{A3671D0B-673C-45D8-B6CE-94DF40693627}.Debug|x64.ActiveCfg = Debug|x64
+		{A3671D0B-673C-45D8-B6CE-94DF40693627}.Debug|x64.Build.0 = Debug|x64
+		{A3671D0B-673C-45D8-B6CE-94DF40693627}.Release|x64.ActiveCfg = Release|x64
+		{A3671D0B-673C-45D8-B6CE-94DF40693627}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
