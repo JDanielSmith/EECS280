@@ -9,6 +9,7 @@
 
 // add headers that you want to pre-compile here
 #pragma warning(push)
+#pragma warning(disable: 4619) // #pragma warning : there is no warning number '...'
 #pragma warning(disable: 5264) // '...': '...' variable is not used
 #include <string>
 #include <vector>
