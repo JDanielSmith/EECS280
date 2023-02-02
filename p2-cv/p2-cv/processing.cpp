@@ -291,7 +291,27 @@ void remove_vertical_seam(Image *img, const int seam[]) {
 // NOTE:     Use the new operator here to create Matrix objects, and
 //           then use delete when you are done with them.
 void seam_carve_width(Image *img, int newWidth) {
-  assert(false); // TODO Replace with your implementation!
+    if (img == nullptr)
+    {
+        throw std::invalid_argument("img");
+    }
+    if (!((0 < newWidth) && (newWidth <= Image_width(img))))
+    {
+        throw std::invalid_argument("newWidth");
+    }
+
+    // "...  remove the minimal cost seam until the image has reached the appropriate width."
+    std::vector<Matrix> maxtrix_(2);
+    auto energy = &(maxtrix_[0]);
+    auto cost = &(maxtrix_[1]);
+    int seam[MAX_MATRIX_HEIGHT];
+    while (Image_width(img) > newWidth)
+    {
+        compute_energy_matrix(img, energy);
+        compute_vertical_cost_matrix(energy, cost);
+        find_minimal_vertical_seam(cost, seam);
+        remove_vertical_seam(img, seam);
+    }
 }
 
 // REQUIRES: img points to a valid Image
