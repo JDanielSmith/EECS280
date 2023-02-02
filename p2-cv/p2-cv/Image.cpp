@@ -46,12 +46,14 @@ void Image_print(const Image* img, std::ostream& os) {
 // EFFECTS:  Returns the width of the Image.
 int Image_width(const Image* img) {
   assert(false); // TODO Replace with your implementation!
+  return -1;
 }
 
 // REQUIRES: img points to a valid Image
 // EFFECTS:  Returns the height of the Image.
 int Image_height(const Image* img) {
   assert(false); // TODO Replace with your implementation!
+  return -1;
 }
 
 // REQUIRES: img points to a valid Image
@@ -60,6 +62,7 @@ int Image_height(const Image* img) {
 // EFFECTS:  Returns the pixel in the Image at the given row and column.
 Pixel Image_get_pixel(const Image* img, int row, int column) {
   assert(false); // TODO Replace with your implementation!
+  return Pixel{ -1, -1, -1 };
 }
 
 // REQUIRES: img points to a valid Image

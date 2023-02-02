@@ -56,6 +56,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Matrix", "Matrix\Matrix.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest_p2-cv", "UnitTest_p2-cv\UnitTest_p2-cv.vcxproj", "{AA921628-49E2-4D24-AAAF-FCAE09CE4D3B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "processing", "processing\processing.vcxproj", "{33A14AAF-C811-4274-81D2-BC01527D1138}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -74,6 +76,10 @@ Global
 		{AA921628-49E2-4D24-AAAF-FCAE09CE4D3B}.Debug|x64.Build.0 = Debug|x64
 		{AA921628-49E2-4D24-AAAF-FCAE09CE4D3B}.Release|x64.ActiveCfg = Release|x64
 		{AA921628-49E2-4D24-AAAF-FCAE09CE4D3B}.Release|x64.Build.0 = Release|x64
+		{33A14AAF-C811-4274-81D2-BC01527D1138}.Debug|x64.ActiveCfg = Debug|x64
+		{33A14AAF-C811-4274-81D2-BC01527D1138}.Debug|x64.Build.0 = Debug|x64
+		{33A14AAF-C811-4274-81D2-BC01527D1138}.Release|x64.ActiveCfg = Release|x64
+		{33A14AAF-C811-4274-81D2-BC01527D1138}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
