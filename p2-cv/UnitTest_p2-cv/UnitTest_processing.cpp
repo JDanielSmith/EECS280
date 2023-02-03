@@ -126,7 +126,7 @@ namespace UnitTestp2cv
 		TEST(test_all_horses)
 		{
 			int horses_sizes[] = { 300, 382, 400, 250 };
-			//test_all("horses", horses_sizes, 2);
+			test_all("horses", horses_sizes, 2);
 		}
 
 		void test_all(string prefix, int sizes[], int num_sizes) {

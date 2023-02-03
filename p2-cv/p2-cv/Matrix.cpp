@@ -51,11 +51,11 @@ void Matrix_init(Matrix* mat, int width, int height) {
 
     constexpr auto size = std::extent<decltype(mat->data)>::value;
     assert(size == (MAX_MATRIX_WIDTH * MAX_MATRIX_HEIGHT));
-    int* const data = Matrix_data(mat);
-    for (size_t i = 0; i < size; i++)
-    {
-       data[i] = -99999;
-    }
+    //int* const data = Matrix_data(mat);
+    //for (size_t i = 0; i < size; i++)
+    //{
+    //   data[i] = -99999;
+    //}
 }
 
 // REQUIRES: mat points to a valid Matrix
