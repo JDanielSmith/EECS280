@@ -205,7 +205,7 @@ void find_minimal_vertical_seam(const Matrix* cost, int seam[]) {
     }
 
     int column_start = 0;
-    int column_end = Matrix_width(cost) - 1;
+    int column_end = Matrix_width(cost);
 
     int row = Matrix_height(cost) - 1;
     // "First, find the minimum cost pixel in the bottom row."
@@ -219,8 +219,8 @@ void find_minimal_vertical_seam(const Matrix* cost, int seam[]) {
         // "Don't look outside the bounds!"
         column_start = previous_column - 1;
         column_start = column_start < 0 ? 0 : column_start;
-        column_end = previous_column + 1;
-        column_end = column_end >= Matrix_width(cost) ? Matrix_width(cost) - 1 : column_end;
+        column_end = column_start + 3; // three pixels above, end is exclusive
+        column_end = column_end > Matrix_width(cost) ? Matrix_width(cost) : column_end;
 
         seam[row] = Matrix_column_of_min_value_in_row(cost, row, column_start, column_end);
     }

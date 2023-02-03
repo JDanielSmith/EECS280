@@ -23,7 +23,73 @@ namespace UnitTestp2cv
 	TEST_CLASS(UnitTest_processing)
 	{
 	public:
-		TEST(test_find_minimal_vertical_seam)
+		TEST(test_find_minimal_vertical_seam_1)
+		{
+			std::vector<Matrix> m(1);
+			auto& mat = m[0];
+
+			Matrix_init(&mat, 5, 5);
+			Matrix_fill(&mat, 99999);
+			*Matrix_at(&mat, 4, 3) = 1;
+
+			int seam[MAX_MATRIX_HEIGHT];
+			find_minimal_vertical_seam(&mat, seam);
+			ASSERT_EQUAL(3, seam[4]);
+		}
+		TEST(test_find_minimal_vertical_seam_2)
+		{
+			std::vector<Matrix> m(1);
+			auto& mat = m[0];
+
+			Matrix_init(&mat, 5, 5);
+			Matrix_fill(&mat, 99999);
+			*Matrix_at(&mat, 4, 3) = 1;
+			*Matrix_at(&mat, 3, 4) = 1;
+
+			int seam[MAX_MATRIX_HEIGHT];
+			find_minimal_vertical_seam(&mat, seam);
+			ASSERT_EQUAL(4, seam[3]);
+			ASSERT_EQUAL(3, seam[4]);
+		}
+		TEST(test_find_minimal_vertical_seam_3)
+		{
+			std::vector<Matrix> m(1);
+			auto& mat = m[0];
+
+			Matrix_init(&mat, 5, 5);
+			Matrix_fill(&mat, 99999);
+			*Matrix_at(&mat, 4, 3) = 1;
+			*Matrix_at(&mat, 3, 4) = 1;
+			*Matrix_at(&mat, 2, 3) = 1;
+
+			int seam[MAX_MATRIX_HEIGHT];
+			find_minimal_vertical_seam(&mat, seam);
+			ASSERT_EQUAL(3, seam[2]);
+			ASSERT_EQUAL(4, seam[3]);
+			ASSERT_EQUAL(3, seam[4]);
+		}
+		TEST(test_find_minimal_vertical_seam_4)
+		{
+			std::vector<Matrix> m(1);
+			auto& mat = m[0];
+
+			Matrix_init(&mat, 5, 5);
+			Matrix_fill(&mat, 99999);
+
+			*Matrix_at(&mat, 4, 3) = 1;
+			*Matrix_at(&mat, 3, 4) = 1;
+			*Matrix_at(&mat, 2, 3) = 1;
+			*Matrix_at(&mat, 1, 3) = 1;
+			*Matrix_at(&mat, 1, 4) = 1;
+
+			int seam[MAX_MATRIX_HEIGHT];
+			find_minimal_vertical_seam(&mat, seam);
+			ASSERT_EQUAL(3, seam[1]);
+			ASSERT_EQUAL(3, seam[2]);
+			ASSERT_EQUAL(4, seam[3]);
+			ASSERT_EQUAL(3, seam[4]);
+		}
+		TEST(test_find_minimal_vertical_seam_5)
 		{
 			std::vector<Matrix> m(1);
 			auto& mat = m[0];
@@ -40,11 +106,11 @@ namespace UnitTestp2cv
 
 			int seam[MAX_MATRIX_HEIGHT];
 			find_minimal_vertical_seam(&mat, seam);
-			ASSERT_EQUAL(seam[4], 3);
-			ASSERT_EQUAL(seam[3], 4);
-			ASSERT_EQUAL(seam[2], 3);
-			ASSERT_EQUAL(seam[1], 3);
-			ASSERT_EQUAL(seam[0], 2);
+			ASSERT_EQUAL(2, seam[0]);
+			ASSERT_EQUAL(3, seam[1]);
+			ASSERT_EQUAL(3, seam[2]);
+			ASSERT_EQUAL(4, seam[3]);
+			ASSERT_EQUAL(3, seam[4]);
 		}
 
 		TEST(test_all_dog)
