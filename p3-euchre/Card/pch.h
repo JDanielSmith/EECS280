@@ -10,10 +10,18 @@
 // add headers that you want to pre-compile here
 #pragma warning(push)
 #pragma warning(disable: 4668) // '...' is not defined as a preprocessor macro, replacing with '...' for '...'
+#pragma warning(disable: 5262) // implicit fall-through occurs here; are you missing a break statement? Use [[fallthrough]] when a break statement is intentionally omitted between cases
+#pragma warning(disable: 5264) // '...': '...' variable is not used
+
 #include <limits.h>
 
 #pragma warning(disable: 4996) // '...': warning STL4036: <ciso646> is removed in C++20. You can define _SILENCE_CXX20_CISO646_REMOVED_WARNING or _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS to acknowledge that you have received this warning.
 #include <ciso646>
+#include <iostream>
+#include <cassert>
+#include <iostream>
+#include <array>
+#include <stdexcept>
 
 #pragma warning(pop)
 
