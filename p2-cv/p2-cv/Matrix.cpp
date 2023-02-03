@@ -178,7 +178,7 @@ static void validate_column(const Matrix* mat, int column)
     {
         throw std::invalid_argument("mat");
     }
-    if (!((0 <= column) && (column <= Matrix_width(mat))))
+    if (!((0 <= column) && (column < Matrix_width(mat))))
     {
         throw std::invalid_argument("column");
     }
@@ -330,7 +330,7 @@ int Matrix_min_value_in_row(const Matrix* mat, int row,
     }
 
     int retval = INT_MAX;
-    for (int c = column_start; c <= column_end; c++)
+    for (int c = column_start; c < column_end; c++)
     {
         retval = std::min(retval, *Matrix_at(mat, row, c));
     }
