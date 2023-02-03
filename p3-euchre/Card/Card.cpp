@@ -103,3 +103,148 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
 //   operator>=
 //   operator==
 //   operator!=
+
+Card::Card(Rank rank_in, Suit suit_in)
+    : rank(rank_in), suit(suit_in)
+{
+}
+
+// "Initializes Card to the Two of Spades"
+Card::Card() : Card(Rank::TWO, Suit::SPADES) {
+}
+
+// "returns the next suit, which is the suit of the same color"
+Suit Suit_next(Suit suit) {
+    switch (suit)
+    {
+    case Suit::HEARTS: return Suit::DIAMONDS;
+    case Suit::DIAMONDS: return Suit::HEARTS;
+    case Suit::SPADES: return Suit::CLUBS;
+    case Suit::CLUBS: return Suit::SPADES;
+    default: throw std::logic_error("Suit_next()");
+    }
+}
+
+bool Card_less(const Card& /*a*/, const Card& /*b*/, Suit /*trump*/) {
+    assert(false);
+    throw std::logic_error("Card_less()");
+}
+bool Card_less(const Card& /*a*/, const Card& /*b*/, const Card& /*led_card*/, Suit /*trump*/)
+{
+    assert(false);
+    throw std::logic_error("Card_less()");
+}
+
+std::ostream& operator<<(std::ostream& os, const Card& card) {
+    // "Prints Card to stream, for example 'Two of Spades'"
+    os << card.get_rank() << " of " << card.get_suit();
+    return os;
+}
+std::istream& operator>>(std::istream& is, Card& /*card*/)
+{
+    return is;
+}
+
+bool operator<(const Card& lhs, const Card& rhs) {
+    // "In the simplest case, cards are ordered by rank (A > K > Q > J > 10 > 9), ..."
+    if (lhs.get_rank() < rhs.get_rank())
+    {
+        return true;
+    }
+    if (lhs.get_rank() > rhs.get_rank())
+    {
+        return false;
+    }
+
+    // "... with ties broken by suit (D > C > H > S)."
+    assert(lhs.get_rank() == rhs.get_rank());
+    return lhs.get_suit() < rhs.get_suit();
+}
+bool operator<=(const Card& lhs, const Card& rhs)
+{
+    if ((lhs < rhs) || (lhs == rhs))
+    {
+        return true;
+    }
+    return false;
+}
+bool operator>(const Card& lhs, const Card& rhs)
+{
+    return !(lhs <= rhs);
+}
+bool operator>=(const Card& lhs, const Card& rhs)
+{
+    return !(lhs < rhs);
+}
+bool operator==(const Card& lhs, const Card& rhs)
+{
+    if ((lhs < rhs) || (rhs < lhs))
+    {
+        return false;
+    }
+    return true; // must be equal
+}
+bool operator!=(const Card& lhs, const Card& rhs)
+{
+    return !(lhs == rhs);
+}
+
+Rank Card::get_rank() const
+{
+    return rank;
+}
+
+Suit Card::get_suit() const
+{
+    return suit;
+}
+Suit Card::get_suit(Suit /*trump*/) const
+{
+    throw std::logic_error("get_suit()");
+}
+
+//EFFECTS Returns true if card is a face card (Jack, Queen, King or Ace)
+bool Card::is_face_or_ace() const
+{
+    switch (get_rank())
+    {
+    case Rank::JACK:
+    case Rank::QUEEN:
+    case Rank::KING:
+    case Rank::ACE:
+        return true;
+
+    case Rank::TWO:
+    case Rank::THREE:
+    case Rank::FOUR:
+    case Rank::FIVE:
+    case Rank::SIX:
+    case Rank::SEVEN:
+    case Rank::EIGHT:
+    case Rank::NINE:
+    case Rank::TEN:
+        return false;
+
+    default:
+        throw std::logic_error("is_face_or_ace()");
+    }
+}
+
+static inline bool is_bower(Rank rank)
+{
+    return rank == Rank::JACK;
+}
+bool Card::is_right_bower(Suit trump) const
+{
+    const auto next_suit = Suit_next(get_suit());
+    return is_bower(get_rank()) && (next_suit == trump);
+}
+bool Card::is_left_bower(Suit trump) const
+{
+    return is_bower(get_rank()) && (get_suit() == trump);
+}
+
+bool Card::is_trump(Suit trump) const
+{
+    return get_suit() == trump;
+}
