@@ -1,16 +1,16 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
+#include "unit_test_framework.h"
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace std;
 
 namespace UnitTestp3euchre
 {
-	TEST_CLASS(Card_public_test)
-	{
-	public:
-		
-		TEST_METHOD(TestMethod1)
-		{
-		}
-	};
+
+TEST_CLASS(Card_public_test) { public:
+#include "../starter-files/Card_public_test.cpp"
+};
+
 }
