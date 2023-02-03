@@ -1,9 +1,11 @@
 // Project UID 1d9f47bfc76643019cfbf037641defe1
 
+#include "Card.h"
+
 #include <cassert>
 #include <iostream>
 #include <array>
-#include "Card.h"
+#include <stdexcept>
 
 using namespace std;
 
@@ -33,6 +35,7 @@ Rank string_to_rank(const std::string &str) {
     }
   }
   assert(false); // Input string didn't match any rank
+  throw std::invalid_argument("'str': didn't match any rank");
 }
 
 //EFFECTS Prints Rank to stream, for example "Two"
@@ -68,6 +71,7 @@ Suit string_to_suit(const std::string &str) {
     }
   }
   assert(false); // Input string didn't match any suit
+  throw std::invalid_argument("'str': didn't match any suit");
 }
 
 //EFFECTS Prints Suit to stream, for example "Spades"

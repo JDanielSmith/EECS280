@@ -26,4 +26,6 @@
 #pragma warning(disable: 4514) // '...': unreferenced inline function has been removed
 #pragma warning(disable: 5039) // '...': pointer or reference to potentially throwing function passed to '...' function under -EHc. Undefined behavior may occur if this function throws an exception. 
 
+//#pragma warning(disable: G66D0AA52) // '...' specifier is incompatible with C++98 [clang-diagnostic-c++98-compat]
+
 #endif //PCH_H
