@@ -260,17 +260,85 @@ namespace UnitTestp2cv
 			}
 
 			constexpr int row = 0;
+			int actual = Matrix_min_value_in_row(mat, row, 0, Matrix_width(mat) - 1);
+			ASSERT_EQUAL(1, actual);
+
 			constexpr int column_start = 0;
 			constexpr int column_end = 1;
-
 			i = 1;
 			for (int col = 0; col < Matrix_width(mat) - 1; col++)
 			{
-				int actual = Matrix_min_value_in_row(mat, row, col, col+1);
+				actual = Matrix_min_value_in_row(mat, row, col, col+1);
 				ASSERT_EQUAL(i, actual);
 				i++;
 			}
 		}
 
+		TEST(test_column_min_value_1x5)
+		{
+			std::vector<Matrix> v(1);
+			auto mat = &(v.front());
+
+			constexpr int width = 1;
+			constexpr int height = 5;
+			Matrix_init(mat, width, height);
+			int i = 1;
+			for (int row = 0; row < Matrix_height(mat); row++)
+			{
+				for (int col = 0; col < Matrix_width(mat); col++)
+				{
+					*Matrix_at(mat, row, col) = i++;
+				}
+			}
+
+			constexpr int column_start = 0;
+			constexpr int column_end = 1;
+			for (int row = 0; row < Matrix_height(mat); row++)
+			{
+				int actual = Matrix_column_of_min_value_in_row(mat, row, column_start, column_end);
+				ASSERT_EQUAL(0, actual);
+			}
+		}
+
+		TEST(test_column_min_value_5x1)
+		{
+			std::vector<Matrix> v(1);
+			auto mat = &(v.front());
+
+			constexpr int width = 5;
+			constexpr int height = 1;
+			Matrix_init(mat, width, height);
+			int i = 1;
+			for (int row = 0; row < Matrix_height(mat); row++)
+			{
+				for (int col = 0; col < Matrix_width(mat); col++)
+				{
+					*Matrix_at(mat, row, col) = i++;
+				}
+			}
+
+			constexpr int row = 0;
+
+			int actual = Matrix_column_of_min_value_in_row(mat, row, 0, Matrix_width(mat) - 1);
+			ASSERT_EQUAL(0, actual);
+
+			for (int col = 0; col < Matrix_width(mat) - 1; col++) // col +1
+			{
+				actual = Matrix_column_of_min_value_in_row(mat, row, col, col + 1);
+				ASSERT_EQUAL(col, actual);
+			}
+
+			for (int col = 0; col < Matrix_width(mat); col++)
+			{
+				actual = Matrix_column_of_min_value_in_row(mat, row, col, Matrix_width(mat));
+				ASSERT_EQUAL(col, actual);
+			}
+
+			for (int col = 1; col < Matrix_width(mat); col++)
+			{
+				actual = Matrix_column_of_min_value_in_row(mat, row, 0, col);
+				ASSERT_EQUAL(0, actual);
+			}
+		}
 	};
 }

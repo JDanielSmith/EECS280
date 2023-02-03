@@ -285,37 +285,10 @@ int Matrix_max(const Matrix* mat) {
 //           column_end (exclusive).
 //           If multiple elements are minimal, returns the column of
 //           the leftmost one.
-int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
-                                      int column_start, int column_end) {
-    const auto min = Matrix_min_value_in_row(mat, row, column_start, column_end);
-    for (int c = column_start; c <= column_end; c++)
-    {
-        if (min == *Matrix_at(mat, row, c))
-        {
-            return c;
-        }
-    }
-
-    throw std::logic_error("Matrix_column_of_min_value_in_row");
-}
-
-// REQUIRES: mat points to a valid Matrix
-//           0 <= row && row < Matrix_height(mat)
-//           0 <= column_start && column_end <= Matrix_width(mat)
-//           column_start < column_end
-// EFFECTS:  Returns the minimal value in a particular region. The region
-//           is defined as elements in the given row and between
-//           column_start (inclusive) and column_end (exclusive).
-int Matrix_min_value_in_row(const Matrix* mat, int row,
-                            int column_start, int column_end) {
-    if (mat == nullptr)
-    {
-        throw std::invalid_argument("mat");
-    }
-    if (!((0 <= row) && (row < Matrix_height(mat))))
-    {
-        throw std::invalid_argument("row");
-    }
+static void validate_row_column_startend(const Matrix* mat, int row,
+    int column_start, int column_end)
+{
+    validate_row(mat, row);
     if (!(0 <= column_start))
     {
         throw std::invalid_argument("column_start");
@@ -328,6 +301,36 @@ int Matrix_min_value_in_row(const Matrix* mat, int row,
     {
         throw std::invalid_argument("column_start");
     }
+}
+
+int Matrix_column_of_min_value_in_row(const Matrix* mat, int row,
+                                      int column_start, int column_end) {
+    validate_row_column_startend(mat, row, column_start, column_end);
+
+    int retval = -1;
+    int min = INT_MAX;
+    for (int c = column_start; c < column_end; c++)
+    {
+        const auto value = *Matrix_at(mat, row, c);
+        if (value < min)
+        {
+            min = value;
+            retval = c;
+        }
+    }
+    return retval;
+}
+
+// REQUIRES: mat points to a valid Matrix
+//           0 <= row && row < Matrix_height(mat)
+//           0 <= column_start && column_end <= Matrix_width(mat)
+//           column_start < column_end
+// EFFECTS:  Returns the minimal value in a particular region. The region
+//           is defined as elements in the given row and between
+//           column_start (inclusive) and column_end (exclusive).
+int Matrix_min_value_in_row(const Matrix* mat, int row,
+                            int column_start, int column_end) {
+    validate_row_column_startend(mat, row, column_start, column_end);
 
     int retval = INT_MAX;
     for (int c = column_start; c < column_end; c++)
