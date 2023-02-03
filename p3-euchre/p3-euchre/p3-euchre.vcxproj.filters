@@ -33,13 +33,13 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\starter-files\Card_public_test.cpp">
+    <ClCompile Include="..\starter-files\Card_public_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\starter-files\Pack_public_test.cpp">
+    <ClCompile Include="..\starter-files\Pack_public_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\starter-files\Player_public_test.cpp">
+    <ClCompile Include="..\starter-files\Player_public_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,16 +47,16 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\starter-files\Card.h">
+    <ClInclude Include="..\starter-files\Card.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\starter-files\Pack.h">
+    <ClInclude Include="..\starter-files\Pack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\starter-files\Player.h">
+    <ClInclude Include="..\starter-files\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\starter-files\unit_test_framework.h">
+    <ClInclude Include="..\starter-files\unit_test_framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
