@@ -11,6 +11,10 @@
 #pragma warning(push)
 #pragma warning(disable: 4668) // '...' is not defined as a preprocessor macro, replacing with '...' for '...'
 #include <limits.h>
+
+#pragma warning(disable: 4996) // '...': warning STL4036: <ciso646> is removed in C++20. You can define _SILENCE_CXX20_CISO646_REMOVED_WARNING or _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS to acknowledge that you have received this warning.
+#include <ciso646>
+
 #pragma warning(pop)
 
 #include "Card.h"
