@@ -125,9 +125,7 @@ Suit Suit_next(Suit suit) {
 
 static bool Card_less_bower(const Card& a, const Card& b, Suit trump)
 {
-    // bowers only for trump
-    assert(a.is_trump(trump));
-    assert(b.is_trump(trump));
+    assert(a.is_trump(trump) && b.is_trump(trump)); // bowers only for trump
 
     if (a.is_right_bower(trump))
     {
@@ -141,12 +139,12 @@ static bool Card_less_bower(const Card& a, const Card& b, Suit trump)
     if (a.is_left_bower(trump))
     {
         assert(!b.is_right_bower(trump));
-        return false; // left > anything except right
+        return false; // left > anything else
     }
     if (b.is_left_bower(trump))
     {
         assert(!a.is_left_bower(trump));
-        return true; // anything < right
+        return true; // anything else < right
     }
 
     // no more bowers
