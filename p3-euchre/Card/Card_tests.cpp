@@ -21,25 +21,19 @@ TEST(test_card_ctor) {
 TEST(test_card_simple_relations)
 {
     const Card ace_diamonds(Rank::ACE, Suit::DIAMONDS);
-    const Card ace_clubs(Rank::ACE, Suit::CLUBS);
-    const Card ace_hearts(Rank::ACE, Suit::HEARTS);
-    const Card ace_spades(Rank::ACE, Suit::SPADES);
-    const Card king_diamonds(Rank::KING, Suit::DIAMONDS);
-    //const Card king_clubs(Rank::KING, Suit::CLUBS);
-    //const Card king_hearts(Rank::KING, Suit::HEARTS);
-    //const Card king_spades(Rank::KING, Suit::SPADES);
-    const Card queen_diamonds(Rank::QUEEN, Suit::DIAMONDS);
-    //const Card queen_clubs(Rank::QUEEN, Suit::CLUBS);
-    //const Card queen_hearts(Rank::QUEEN, Suit::HEARTS);
-    //const Card queen_spades(Rank::QUEEN, Suit::SPADES);
+    ASSERT_EQUAL(ace_diamonds, ace_diamonds);
 
     // "In the simplest case, cards are ordered by rank (A > K > Q > J > 10 > 9), ..."
-    ASSERT_EQUAL(ace_diamonds, ace_diamonds);
+    const Card king_diamonds(Rank::KING, Suit::DIAMONDS);
+    const Card queen_diamonds(Rank::QUEEN, Suit::DIAMONDS);
     ASSERT_TRUE(ace_diamonds > king_diamonds);
     ASSERT_TRUE(king_diamonds > queen_diamonds);
     ASSERT_TRUE(ace_diamonds > queen_diamonds);
 
     // "... with ties broken by suit (D > C > H > S)."
+    const Card ace_clubs(Rank::ACE, Suit::CLUBS);
+    const Card ace_hearts(Rank::ACE, Suit::HEARTS);
+    const Card ace_spades(Rank::ACE, Suit::SPADES);
     ASSERT_TRUE(ace_diamonds > ace_clubs);
     ASSERT_TRUE(ace_clubs > ace_hearts);
     ASSERT_TRUE(ace_hearts > ace_spades);
@@ -114,5 +108,42 @@ TEST(test_card_less_trump)
     ASSERT_TRUE(Card_less(nine_diamonds, ace_clubs, Suit::SPADES));
     ASSERT_FALSE(Card_less(nine_diamonds, ace_clubs, Suit::DIAMONDS));
 }
+
+TEST(test_card_less_led)
+{
+    const Card queen_clubs(Rank::QUEEN, Suit::CLUBS);
+    const Card ten_clubs(Rank::TEN, Suit::CLUBS);
+    const Card king_clubs(Rank::KING, Suit::CLUBS);
+    ASSERT_TRUE(Card_less(ten_clubs, king_clubs, queen_clubs, Suit::DIAMONDS));
+    ASSERT_FALSE(Card_less(king_clubs, ten_clubs, queen_clubs, Suit::DIAMONDS));
+    ASSERT_TRUE(Card_less(ten_clubs, king_clubs, queen_clubs, Suit::HEARTS));
+    ASSERT_FALSE(Card_less(king_clubs, ten_clubs, queen_clubs, Suit::HEARTS));
+    ASSERT_TRUE(Card_less(ten_clubs, king_clubs, queen_clubs, Suit::SPADES));
+    ASSERT_FALSE(Card_less(king_clubs, ten_clubs, queen_clubs, Suit::SPADES));
+    ASSERT_TRUE(Card_less(ten_clubs, king_clubs, queen_clubs, Suit::CLUBS));
+    ASSERT_FALSE(Card_less(king_clubs, ten_clubs, queen_clubs, Suit::CLUBS));
+
+    const Card ten_spades(Rank::TEN, Suit::SPADES);
+    ASSERT_TRUE(Card_less(ten_spades, king_clubs, queen_clubs, Suit::DIAMONDS));
+    ASSERT_FALSE(Card_less(king_clubs, ten_spades, queen_clubs, Suit::DIAMONDS));
+    ASSERT_TRUE(Card_less(ten_spades, king_clubs, queen_clubs, Suit::HEARTS));
+    ASSERT_FALSE(Card_less(king_clubs, ten_spades, queen_clubs, Suit::HEARTS));
+    ASSERT_TRUE(Card_less(ten_spades, king_clubs, queen_clubs, Suit::CLUBS));
+    ASSERT_FALSE(Card_less(king_clubs, ten_spades, queen_clubs, Suit::CLUBS));
+    ASSERT_FALSE(Card_less(ten_spades, king_clubs, queen_clubs, Suit::SPADES));
+    ASSERT_TRUE(Card_less(king_clubs, ten_spades, queen_clubs, Suit::SPADES));
+
+    const Card king_spades(Rank::KING, Suit::SPADES);
+    ASSERT_TRUE(Card_less(ten_spades, king_spades, queen_clubs, Suit::DIAMONDS));
+    ASSERT_FALSE(Card_less(king_spades, ten_spades, queen_clubs, Suit::DIAMONDS));
+    ASSERT_TRUE(Card_less(ten_spades, king_spades, queen_clubs, Suit::HEARTS));
+    ASSERT_FALSE(Card_less(king_spades, ten_spades, queen_clubs, Suit::HEARTS));
+    ASSERT_TRUE(Card_less(ten_spades, king_spades, queen_clubs, Suit::CLUBS));
+    ASSERT_FALSE(Card_less(king_spades, ten_spades, queen_clubs, Suit::CLUBS));
+    ASSERT_TRUE(Card_less(ten_spades, king_spades, queen_clubs, Suit::SPADES));
+    ASSERT_FALSE(Card_less(king_spades, ten_spades, queen_clubs, Suit::SPADES));
+
+}
+
 
 TEST_MAIN()

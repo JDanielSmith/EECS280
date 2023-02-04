@@ -7,8 +7,6 @@
 #include <array>
 #include <stdexcept>
 
-using namespace std;
-
 /////////////// Rank operator implementations - DO NOT CHANGE ///////////////
 
 constexpr const char *const RANK_NAMES[] = {
@@ -46,7 +44,7 @@ std::ostream & operator<<(std::ostream &os, Rank rank) {
 
 //EFFECTS Reads a Rank from a stream, for example "Two" -> TWO
 std::istream & operator>>(std::istream &is, Rank &rank) {
-  string str;
+  std::string str;
   is >> str;
   rank = string_to_rank(str);
   return is;
@@ -82,7 +80,7 @@ std::ostream & operator<<(std::ostream &os, Suit suit) {
 
 //EFFECTS Reads a Suit from a stream, for example "Spades" -> SPADES
 std::istream & operator>>(std::istream &is, Suit &suit) {
-  string str;
+  std::string str;
   is >> str;
   suit = string_to_suit(str);
   return is;
@@ -158,7 +156,6 @@ static bool Card_less_bower(const Card& a, const Card& b, Suit trump)
     assert(!b.is_left_bower(trump));
     return a < b;
 }
-
 bool Card_less(const Card& a, const Card& b, Suit trump) {
     if (a.is_trump(trump) && !b.is_trump(trump))
     {
@@ -176,44 +173,32 @@ bool Card_less(const Card& a, const Card& b, Suit trump) {
     return Card_less_bower(a, b, trump);
 }
 
+static bool Card_less(const Card& a, const Card& b, Suit led, Suit trump)
+{
+    const auto a_followed_suit = a.get_suit(trump) == led;
+    const auto b_followed_suit = b.get_suit(trump) == led;
+    if (a_followed_suit && !b_followed_suit)
+    {
+        return false; // a > b
+    }
+    if (!a_followed_suit && b_followed_suit)
+    {
+        return true; // a < b
+    }
+
+    assert( (a_followed_suit && b_followed_suit) || (!a_followed_suit && !b_followed_suit) );
+    return a < b;
+}
 bool Card_less(const Card& a, const Card& b, const Card& led_card, Suit trump)
 {
-    // if trump was lead, then that's all that matters
-    if (led_card.is_trump(trump))
+    // If there's a trump card, what was led doesn't matter (assume no renege)
+    if (a.is_trump(trump) || b.is_trump(trump))
     {
         return Card_less(a, b, trump);
     }
 
-    // If suit was followed, it's a "normal" Card_less() comparision
-    const auto a_suit = a.get_suit(trump);
-    const auto b_suit = b.get_suit(trump);
     const auto led_suit = led_card.get_suit(trump);
-    if ((a_suit == led_suit) && (b_suit == led_suit))
-    {
-        return Card_less(a, b, trump);
-    }
-
-    if (a.is_trump(trump))
-    {
-        return false; // trump > non-trump lead
-    }
-    if (b.is_trump(trump))
-    {
-        return true; // non-trump < trump
-    }
-
-    if ((a_suit == led_suit) && (b_suit != led_suit))
-    {
-        return false; // a > b; a followed led, b didn't
-    }
-
-    if ((a_suit != led_suit) && (b_suit == led_suit))
-    {
-        return true; // a < b; b followed led, a didn't
-    }
-
-    assert(false);
-    throw std::logic_error("Card_less()");
+    return Card_less(a, b, led_suit, trump);
 }
 
 std::ostream& operator<<(std::ostream& os, const Card& card) {
@@ -234,7 +219,8 @@ std::istream& operator>>(std::istream& is, Card& card)
     return is;
 }
 
-bool operator<(const Card& lhs, const Card& rhs) {
+static bool less(const Card& lhs, const Card& rhs)
+{
     // "In the simplest case, cards are ordered by rank (A > K > Q > J > 10 > 9), ..."
     if (lhs.get_rank() < rhs.get_rank())
     {
@@ -244,18 +230,17 @@ bool operator<(const Card& lhs, const Card& rhs) {
     {
         return false;
     }
+    assert(lhs.get_rank() == rhs.get_rank());
 
     // "... with ties broken by suit (D > C > H > S)."
-    assert(lhs.get_rank() == rhs.get_rank());
     return lhs.get_suit() < rhs.get_suit();
+}
+bool operator<(const Card& lhs, const Card& rhs) {
+    return less(lhs, rhs);
 }
 bool operator<=(const Card& lhs, const Card& rhs)
 {
-    if ((lhs < rhs) || (lhs == rhs))
-    {
-        return true;
-    }
-    return false;
+    return (lhs < rhs) || (lhs == rhs);
 }
 bool operator>(const Card& lhs, const Card& rhs)
 {
@@ -269,7 +254,7 @@ bool operator==(const Card& lhs, const Card& rhs)
 {
     if ((lhs < rhs) || (rhs < lhs))
     {
-        return false;
+        return false; // can't be equal
     }
     return true; // must be equal
 }
