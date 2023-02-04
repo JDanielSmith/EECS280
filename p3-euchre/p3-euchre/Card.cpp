@@ -125,12 +125,93 @@ Suit Suit_next(Suit suit) {
     }
 }
 
-bool Card_less(const Card& /*a*/, const Card& /*b*/, Suit /*trump*/) {
-    assert(false);
-    throw std::logic_error("Card_less()");
-}
-bool Card_less(const Card& /*a*/, const Card& /*b*/, const Card& /*led_card*/, Suit /*trump*/)
+static bool Card_less_bower(const Card& a, const Card& b, Suit trump)
 {
+    // bowers only for trump
+    assert(a.is_trump(trump));
+    assert(b.is_trump(trump));
+
+    if (a.is_right_bower(trump))
+    {
+        return false; // right > anything
+    }
+    if (b.is_right_bower(trump))
+    {
+        assert(!a.is_right_bower(trump));
+        return true; // anything < right
+    }
+    if (a.is_left_bower(trump))
+    {
+        assert(!b.is_right_bower(trump));
+        return false; // left > anything except right
+    }
+    if (b.is_left_bower(trump))
+    {
+        assert(!a.is_left_bower(trump));
+        return true; // anything < right
+    }
+
+    // no more bowers
+    assert(!a.is_right_bower(trump));
+    assert(!b.is_right_bower(trump));
+    assert(!a.is_left_bower(trump));
+    assert(!b.is_left_bower(trump));
+    return a < b;
+}
+
+bool Card_less(const Card& a, const Card& b, Suit trump) {
+    if (a.is_trump(trump) && !b.is_trump(trump))
+    {
+        return false; // trump > !trump
+    }
+    if (!a.is_trump(trump) && b.is_trump(trump))
+    {
+        return true; // !trump < trump
+    }
+    if (!a.is_trump(trump) && !b.is_trump(trump))
+    {
+        return a < b; // no trump -> no bowers
+    }
+
+    return Card_less_bower(a, b, trump);
+}
+
+bool Card_less(const Card& a, const Card& b, const Card& led_card, Suit trump)
+{
+    // if trump was lead, then that's all that matters
+    if (led_card.is_trump(trump))
+    {
+        return Card_less(a, b, trump);
+    }
+
+    // If suit was followed, it's a "normal" Card_less() comparision
+    const auto a_suit = a.get_suit(trump);
+    const auto b_suit = b.get_suit(trump);
+    const auto led_suit = led_card.get_suit(trump);
+    if ((a_suit == led_suit) && (b_suit == led_suit))
+    {
+        return Card_less(a, b, trump);
+    }
+
+    if (a.is_trump(trump))
+    {
+        return false; // trump > non-trump lead
+    }
+    if (b.is_trump(trump))
+    {
+        return true; // non-trump < trump
+    }
+
+    if ((a_suit == led_suit) && (b_suit != led_suit))
+    {
+        return false; // a > b; a followed led, b didn't
+    }
+
+    if ((a_suit != led_suit) && (b_suit == led_suit))
+    {
+        return true; // a < b; b followed led, a didn't
+    }
+
     assert(false);
     throw std::logic_error("Card_less()");
 }
