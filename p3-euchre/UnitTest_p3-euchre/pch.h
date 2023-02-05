@@ -12,6 +12,7 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 #include "..\p3-euchre\pch.h"
 
 #include "CppUnitTest.h"
