@@ -30,6 +30,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest_p3-euchre", "UnitT
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Card", "Card\Card.vcxproj", "{39B27FB0-B8F7-40C3-82F1-1E091F669645}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pack", "Pack\Pack.vcxproj", "{7C688F0F-FC74-4934-B2F5-8D777E77BD11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -48,6 +50,10 @@ Global
 		{39B27FB0-B8F7-40C3-82F1-1E091F669645}.Debug|x64.Build.0 = Debug|x64
 		{39B27FB0-B8F7-40C3-82F1-1E091F669645}.Release|x64.ActiveCfg = Release|x64
 		{39B27FB0-B8F7-40C3-82F1-1E091F669645}.Release|x64.Build.0 = Release|x64
+		{7C688F0F-FC74-4934-B2F5-8D777E77BD11}.Debug|x64.ActiveCfg = Debug|x64
+		{7C688F0F-FC74-4934-B2F5-8D777E77BD11}.Debug|x64.Build.0 = Debug|x64
+		{7C688F0F-FC74-4934-B2F5-8D777E77BD11}.Release|x64.ActiveCfg = Release|x64
+		{7C688F0F-FC74-4934-B2F5-8D777E77BD11}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{39B27FB0-B8F7-40C3-82F1-1E091F669645}</ProjectGuid>
+    <ProjectGuid>{7C688F0F-FC74-4934-B2F5-8D777E77BD11}</ProjectGuid>
     <RootNamespace>Pack</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -83,7 +83,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\starter-files\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)starter-files\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -108,6 +108,11 @@
   <ItemGroup>
     <ClInclude Include="..\starter-files\Pack.h" />
     <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Card\Card.vcxproj">
+      <Project>{39b27fb0-b8f7-40c3-82f1-1e091f669645}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,10 +18,10 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\p3-euchre\Card.cpp">
+    <ClCompile Include="..\p3-euchre\Pack_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\p3-euchre\Card_tests.cpp">
+    <ClCompile Include="..\p3-euchre\Pack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\starter-files\Card.h">
+    <ClInclude Include="..\starter-files\Pack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

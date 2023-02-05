@@ -2,7 +2,21 @@
 #define UNIT_TEST_FRAMEWORK_H
 #pragma once
 
+#include <map>
 #include <utility>
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <cmath>
+#include <memory>
+#include <vector>
+#include <typeinfo>
+#include <type_traits>
+#include <cstdlib>
+#include <iterator>
+#include <algorithm>
+#include <exception>
+#include <stdexcept>
 #include <string>
 
 #include "CppUnitTest.h"

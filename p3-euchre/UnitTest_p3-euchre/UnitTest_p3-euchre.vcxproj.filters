@@ -27,7 +27,19 @@
     <ClCompile Include="..\starter-files\Card_public_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Card\Card_tests.cpp">
+    <ClCompile Include="..\p3-euchre\Pack_tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\p3-euchre\Card_tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pack_tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pack_public_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\starter-files\Pack_public_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

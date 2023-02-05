@@ -7,10 +7,18 @@
 #pragma once
 
 // add headers that you want to pre-compile here
-#include "..\p3-euchre\pch.h"
+#include <assert.h>
+#include <cassert>
 #include <sstream>
+#include <iostream>
+#include <fstream>
+#include "..\p3-euchre\pch.h"
 
 #include "CppUnitTest.h"
 
+#include "unit_test_framework.h"
+
+#include "Pack.h"
 #include "Card.h"
-//#include "unit_test_framework.h"
+#include "Player.h"
+

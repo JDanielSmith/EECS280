@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-using namespace std;
+//using namespace std;
 
 TEST(test_pack_default_ctor) {
     Pack pack;

@@ -3,10 +3,9 @@
 #include "Pack.h"
 #include "Card.h"
 #include "unit_test_framework.h"
-#include <cassert>
 #include <iostream>
 #include <fstream>
-using namespace std;
+//using namespace std;
 
 // THESE TEST CASES ARE NOT VERY THOROUGH.
 // YOU NEED TO WRITE YOUR OWN COMPREHENSIVE TEST CASES IN Pack_tests.cpp
@@ -20,8 +19,8 @@ TEST(test_pack_default_ctor) {
 }
 
 TEST(test_pack_istream_ctor) {
-  const string filename = "pack.in";
-  ifstream ifs(filename);
+  const std::string filename = "pack.in";
+  std::ifstream ifs(filename);
   assert(ifs.is_open());
   Pack pack(ifs);
   Card first_card = pack.deal_one();
