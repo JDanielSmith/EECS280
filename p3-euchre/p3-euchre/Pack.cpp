@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <vector>
 #include <type_traits>
+#include <numeric>
 
 inline static void increment_rank(Rank& rank)
 {
@@ -92,11 +93,49 @@ Card Pack::deal_one()
     return retval;
 }
 
+std::vector<size_t> in_shuffle(const std::vector<size_t>& input)
+{
+    if ((input.size() % 2) != 0)
+    {
+        throw std::invalid_argument("'input' must be even");
+    }
+
+    const auto half_size = static_cast<ptrdiff_t>(input.size() / 2);
+    const auto half = input.begin() + half_size;
+    std::vector<size_t> left(input.begin(), half);
+    std::vector<size_t> right(half, input.end());
+    assert(left.size() == right.size());
+
+    std::vector<size_t> retval;
+    retval.reserve(input.size());
+    for (size_t i = 0; i < left.size(); i++)
+    {
+        retval.push_back(std::move(right[i]));
+        retval.push_back(std::move(left[i]));
+    }
+    return retval;
+}
+
 void Pack::shuffle()
 {
     reset();
     assert(!empty());
-    throw std::logic_error("shuffle()");
+
+    std::vector<size_t> indexes(cards.size());
+    std::iota(indexes.begin(), indexes.end(), static_cast<size_t>(0));
+
+    // "This performs an in shuffle seven times."
+    for (int i = 0; i < 7; i++)
+    {
+        indexes = in_shuffle(indexes);
+    }
+
+    const auto ordered = cards;
+    for (size_t i = 0; i < indexes.size(); i++)
+    {
+        auto i_card = indexes[i];
+        cards[i] = ordered[i_card];
+    }
 }
 
 bool Pack::empty() const
