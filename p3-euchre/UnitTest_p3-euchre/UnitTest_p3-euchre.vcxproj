@@ -108,6 +108,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\p3-euchre\Player_public_test.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\p3-euchre\Player_tests.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Card_public_test.cpp" />
     <ClCompile Include="Pack_public_test.cpp" />
     <ClCompile Include="Pack_tests.cpp" />
@@ -116,6 +124,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Card_tests.cpp" />
+    <ClCompile Include="Player_public_test.cpp" />
+    <ClCompile Include="Player_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -127,6 +137,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Pack\Pack.vcxproj">
       <Project>{7c688f0f-fc74-4934-b2f5-8d777e77bd11}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Player\Player.vcxproj">
+      <Project>{06ac3500-d935-4e24-ba44-25ee1a345b90}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

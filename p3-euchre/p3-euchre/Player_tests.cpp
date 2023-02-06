@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-using namespace std;
+//using namespace std;
 
 TEST(test_player_get_name) {
     Player * alice = Player_factory("Alice", "Simple");
