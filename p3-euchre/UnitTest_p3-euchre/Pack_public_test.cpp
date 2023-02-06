@@ -8,7 +8,7 @@ namespace UnitTestp3euchre
 {
 
 TEST_CLASS(Pack_public_test) { public:
-#include "../starter-files/Pack_public_test.cpp"
+#include "../p3-euchre/Pack_public_test.cpp"
 };
 
 }

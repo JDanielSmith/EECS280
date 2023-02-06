@@ -10,7 +10,7 @@ namespace UnitTestp3euchre
 {
 
 TEST_CLASS(Card_public_test) { public:
-#include "../starter-files/Card_public_test.cpp"
+#include "../p3-euchre/Card_public_test.cpp"
 };
 
 }
