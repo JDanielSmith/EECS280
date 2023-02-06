@@ -19,7 +19,7 @@
 
 TEST(test_player_insertion) {
   // Create a Human player
-  Player * human = Player_factory("NotRobot", "Human");
+  auto human = Player_factory("NotRobot", "Human");
 
   // Print the player using the stream insertion operator
   std::ostringstream oss1;
@@ -29,28 +29,23 @@ TEST(test_player_insertion) {
   ASSERT_EQUAL(oss1.str(), "NotRobot");
 
   // Create a Simple player
-  Player * alice = Player_factory("Alice", "Simple");
+  auto alice = Player_factory("Alice", "Simple");
 
   // Print the player using the stream insertion operator
   std::ostringstream oss2;
   oss2 << *alice;
   ASSERT_EQUAL(oss2.str(), "Alice");
-
-  // Clean up players that were created using Player_factory()
-  delete human;
-  delete alice;
 }
 
 TEST(test_player_get_name) {
   // Create a player and verify that get_name() returns the player's name
-  Player * alice = Player_factory("Alice", "Simple");
+  auto alice = Player_factory("Alice", "Simple");
   ASSERT_EQUAL(alice->get_name(), "Alice");
-  delete alice;
 }
 
 TEST(test_simple_player_make_trump) {
   // Bob's hand
-  Player * bob = Player_factory("Bob", "Simple");
+  auto bob = Player_factory("Bob", "Simple");
   bob->add_card(Card(NINE, SPADES));
   bob->add_card(Card(TEN, SPADES));
   bob->add_card(Card(QUEEN, SPADES));
@@ -70,13 +65,11 @@ TEST(test_simple_player_make_trump) {
   // Verify Bob's order up and trump suit
   ASSERT_TRUE(orderup);
   ASSERT_EQUAL(trump, SPADES);
-
-  delete bob;
 }
 
 TEST(test_simple_player_lead_card) {
   // Bob's hand
-  Player * bob = Player_factory("Bob", "Simple");
+  auto bob = Player_factory("Bob", "Simple");
   bob->add_card(Card(NINE, SPADES));
   bob->add_card(Card(TEN, SPADES));
   bob->add_card(Card(QUEEN, SPADES));
@@ -94,13 +87,11 @@ TEST(test_simple_player_lead_card) {
   // Verify the card Bob selected to lead
   Card ace_spades(ACE, SPADES);
   ASSERT_EQUAL(card_led, ace_spades); //check led card
-
-  delete bob;
 }
 
 TEST(test_simple_player_play_card) {
   // Bob's hand
-  Player * bob = Player_factory("Bob", "Simple");
+  auto bob = Player_factory("Bob", "Simple");
   bob->add_card(Card(NINE, SPADES));
   bob->add_card(Card(TEN, SPADES));
   bob->add_card(Card(QUEEN, SPADES));
@@ -116,7 +107,6 @@ TEST(test_simple_player_play_card) {
 
   // Verify the card Bob played
   ASSERT_EQUAL(card_played, Card(NINE, SPADES));
-  delete bob;
 }
 
 TEST_MAIN()
