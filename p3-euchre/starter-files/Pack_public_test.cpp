@@ -3,10 +3,10 @@
 #include "Pack.h"
 #include "Card.h"
 #include "unit_test_framework.h"
+#include <cassert>
 #include <iostream>
 #include <fstream>
-#include <filesystem>
-//using namespace std;
+using namespace std;
 
 // THESE TEST CASES ARE NOT VERY THOROUGH.
 // YOU NEED TO WRITE YOUR OWN COMPREHENSIVE TEST CASES IN Pack_tests.cpp
@@ -20,11 +20,8 @@ TEST(test_pack_default_ctor) {
 }
 
 TEST(test_pack_istream_ctor) {
-  static const std::filesystem::path path(R"(C:\Users\JDani\source\repos\eecs280\p3-euchre\starter-files)"); // TODO
-  std::filesystem::current_path(path);
-
-  const std::string filename = "pack.in";
-  std::ifstream ifs(filename);
+  const string filename = "pack.in";
+  ifstream ifs(filename);
   assert(ifs.is_open());
   Pack pack(ifs);
   Card first_card = pack.deal_one();
