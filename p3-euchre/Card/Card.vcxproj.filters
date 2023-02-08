@@ -26,10 +26,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="..\starter-files\Card.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\starter-files\Card.h">
+    <ClInclude Include="..\p3-euchre\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

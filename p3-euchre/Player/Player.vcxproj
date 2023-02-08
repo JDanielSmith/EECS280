@@ -107,7 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\p3-euchre\Player.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\p3-euchre\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Card\Card.vcxproj">
