@@ -23,6 +23,10 @@
 #include <iostream>
 #include <array>
 #include <stdexcept>
+#include <set>
+#include <algorithm>
+#include <vector>
+#include <optional>
 
 #pragma warning(pop)
 
