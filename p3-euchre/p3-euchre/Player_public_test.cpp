@@ -19,7 +19,7 @@
 
 TEST(test_player_insertion) {
   // Create a Human player
-  auto human = Player_factory("NotRobot", "Human");
+  auto human = Player_factory("NotRobot", Strategy::Human);
 
   // Print the player using the stream insertion operator
   std::ostringstream oss1;
@@ -29,7 +29,7 @@ TEST(test_player_insertion) {
   ASSERT_EQUAL(oss1.str(), "NotRobot");
 
   // Create a Simple player
-  auto alice = Player_factory("Alice", "Simple");
+  auto alice = Player_factory("Alice", Strategy::Simple);
 
   // Print the player using the stream insertion operator
   std::ostringstream oss2;
@@ -39,13 +39,13 @@ TEST(test_player_insertion) {
 
 TEST(test_player_get_name) {
   // Create a player and verify that get_name() returns the player's name
-  auto alice = Player_factory("Alice", "Simple");
+  auto alice = Player_factory("Alice", Strategy::Simple);
   ASSERT_EQUAL(alice->get_name(), "Alice");
 }
 
 TEST(test_simple_player_make_trump) {
   // Bob's hand
-  auto bob = Player_factory("Bob", "Simple");
+  auto bob = Player_factory("Bob", Strategy::Simple);
   bob->add_card(Card(NINE, SPADES));
   bob->add_card(Card(TEN, SPADES));
   bob->add_card(Card(QUEEN, SPADES));
@@ -69,7 +69,7 @@ TEST(test_simple_player_make_trump) {
 
 TEST(test_simple_player_lead_card) {
   // Bob's hand
-  auto bob = Player_factory("Bob", "Simple");
+  auto bob = Player_factory("Bob", Strategy::Simple);
   bob->add_card(Card(NINE, SPADES));
   bob->add_card(Card(TEN, SPADES));
   bob->add_card(Card(QUEEN, SPADES));
@@ -91,7 +91,7 @@ TEST(test_simple_player_lead_card) {
 
 TEST(test_simple_player_play_card) {
   // Bob's hand
-  auto bob = Player_factory("Bob", "Simple");
+  auto bob = Player_factory("Bob", Strategy::Simple);
   bob->add_card(Card(NINE, SPADES));
   bob->add_card(Card(TEN, SPADES));
   bob->add_card(Card(QUEEN, SPADES));

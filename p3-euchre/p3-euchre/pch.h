@@ -26,6 +26,8 @@
 
 #pragma warning(pop)
 
+#pragma warning(disable: 4464) // relative include path contains '..'
+
 #include "Card.h"
 #include "Pack.h"
 #include "Player.h"

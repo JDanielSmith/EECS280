@@ -8,7 +8,7 @@
 //using namespace std;
 
 TEST(test_player_get_name) {
-    auto alice = Player_factory("Alice", "Simple");
+    auto alice = Player_factory("Alice", Strategy::Simple);
     ASSERT_EQUAL("Alice", alice->get_name());
 }
 

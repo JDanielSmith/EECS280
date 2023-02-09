@@ -48,11 +48,10 @@ public:
 };
 
 
-std::unique_ptr<Player> Player_factory(const std::string& name, const std::string& strategy) {
+std::unique_ptr<Player> Player_factory(const std::string& name, Strategy strategy) {
 	// We need to check the value of strategy and return 
 	// the corresponding player type.
-	if (strategy == "Simple") {
-		// The "new" keyword dynamically allocates an object.
+	if (strategy == Strategy::Simple) {
 		return std::make_unique<SimplePlayer>(name);
 	}
 	// Repeat for each other type of Player
@@ -60,6 +59,19 @@ std::unique_ptr<Player> Player_factory(const std::string& name, const std::strin
 	// Invalid strategy if we get here
 	throw std::invalid_argument("strategy");
 }
+Player* Player_factory(const std::string& name, const std::string& strategy)
+{
+	// We need to check the value of strategy and return 
+	// the corresponding player type.
+	if (strategy == "Simple") {
+		return Player_factory(name, Strategy::Simple).release();
+	}
+	// Repeat for each other type of Player
+
+	// Invalid strategy if we get here
+	throw std::invalid_argument("strategy");
+}
+
 
 std::ostream& operator<<(std::ostream& os, const Player& /*p*/) {
 	assert(false);

@@ -108,6 +108,10 @@
   <ItemGroup>
     <ClInclude Include="..\p3-euchre\Player.h" />
     <ClInclude Include="..\p3-euchre\pch.h" />
+    <ClInclude Include="..\starter-files\Player.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Card\Card.vcxproj">

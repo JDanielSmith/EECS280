@@ -32,5 +32,8 @@
     <ClInclude Include="..\p3-euchre\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\starter-files\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
