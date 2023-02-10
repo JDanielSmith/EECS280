@@ -49,7 +49,6 @@ static std::optional<Card> follow_suit(const std::set<Card>& hand, const Card& l
 	return retval;
 }
 
-
 class SimplePlayer final : public Player
 {
 	std::string name_;
@@ -72,10 +71,70 @@ public:
 		hand.insert(c);
 	}
 
-	bool make_trump(const Card& /*upcard*/, bool /*is_dealer*/,
-		int /*round*/, Suit& /*order_up_suit*/) const override
+	bool make_trump(const Card& upcard, bool is_dealer,
+		int round, Suit& order_up_suit) const override
 	{
-		throw std::logic_error("make_trump()");
+		if ((round != 1) && (round != 2))
+		{
+			throw std::invalid_argument("make_trump(): round");
+		}
+
+		Suit trump = upcard.get_suit();
+		if (round == 1)
+		{
+			// "They will order up if that would mean they have two or more cards that are either face or ace cards of the
+			// trump suit (the right and left bowers, and Q, K, A of the trump suit, which is the suit proposed by the upcard)."
+			int good_count = 0;
+			for (const auto& c : hand)
+			{
+				if (c.is_face_or_ace() && c.is_trump(trump))
+				{
+					good_count++;
+				}
+			}
+			if (good_count >= 2)
+			{
+				// "If Player wishes to order up a trump suit then return true and change order_up_suit to desired suit.
+				// If Player wishes to pass, then do not modify order_up_suit and return false."
+				order_up_suit = trump;
+				return true;
+			}
+			return false;
+		}
+
+		assert(round == 2);
+		
+		// "During round two, a Simple Player considers ordering up the suit with the same color as the upcard, which would
+		// make that suit trump."
+		trump = Suit_next(trump);
+
+		// "They will order up if that would mean they have one or more cards that are either face or ace cards of the trump
+		// suit in their hand (the right and left bowers, and Q, K, A of the order-up suit). For example, if the upcard is a Heart
+		// and the player has the King of Diamonds in their hand, they will order up Diamonds."
+		int good_count = 0;
+		for (const auto& c : hand)
+		{
+			if (c.is_face_or_ace() && c.is_trump(trump))
+			{
+				good_count++;
+			}
+		}
+		if (good_count >= 1)
+		{
+			order_up_suit = trump;
+			return true;
+		}
+
+		// "If making reaches the dealer during the second round, we invoke screw the dealer, where the dealer is forced to
+		// order up. In the case of screw the dealer, the dealer will always order up the suit with the same color as the upcard."
+		if (is_dealer)
+		{
+			order_up_suit = trump;
+			return true;
+		}
+
+		// "The Simple Player will not order up any other suit."
+		return false;		
 	}
 
 	void add_and_discard(const Card& upcard) override
