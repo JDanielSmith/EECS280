@@ -76,39 +76,43 @@ static bool can_follow_suit(const std::vector<Card>& hand, const Card& led_card,
     return false;
 }
 
-static Card highest_card(const std::vector<Card>& hand, const Card& led_card, Suit trump)
+static int highest_card(const std::vector<Card>& hand, const Card& led_card, Suit trump)
 {
-    Card retval;
+    int retval = -1;
+    Card highest; // TWO/SPADES
 
     // TODO: too simple for Euchre!
-    for (auto&& card : hand)
+    for (int i=0; i<hand.size(); i++)
     {
-        if (card > retval)
+        if (hand[i] > highest)
         {
-            retval = card;
+            highest = hand[i];
+            retval = i;
         }
     }
 
     return retval;
 }
 
-static Card lowest_card(const std::vector<Card>& hand, Suit trump)
+static int lowest_card(const std::vector<Card>& hand, Suit trump)
 {
-    Card retval(Rank::ACE, Suit::SPADES); // highest possible card
+    int retval = -1;
+    Card lowest(Rank::ACE, Suit::SPADES); // highest possible card
 
     // TODO: too simple for Euchre!
-    for (auto&& card : hand)
+    for (int i = 0; i < hand.size(); i++)
     {
-        if (card < retval)
+        if (hand[i] < lowest)
         {
-            retval = card;
+            lowest = hand[i];
+            retval = i;
         }
     }
 
     return retval;
 }
 
-static Card play_card(const std::vector<Card>& hand, const Card& led_card, Suit trump)
+static int play_card(const std::vector<Card>& hand, const Card& led_card, Suit trump)
 {
     // "If a Simple Player can follow suit, ..."
     if (can_follow_suit(hand, led_card, trump))
@@ -142,43 +146,43 @@ static void test_highest_card()
 {
     Card led_card(Rank::NINE, Suit::SPADES);
     auto actual = highest_card(hand, led_card, Suit::SPADES);
-    assert(actual == Card(Rank::ACE, Suit::SPADES));
+    assert(actual == 4);
     actual = highest_card(hand, led_card, Suit::CLUBS);
-    assert(actual == Card(Rank::ACE, Suit::SPADES));
+    assert(actual == 4);
 
     led_card = Card(Rank::NINE, Suit::CLUBS);
     actual = highest_card(hand, led_card, Suit::SPADES);
-    assert(actual == Card(Rank::ACE, Suit::SPADES));
+    assert(actual == 4);
     actual = highest_card(hand, led_card, Suit::CLUBS);
-    assert(actual == Card(Rank::ACE, Suit::SPADES));
+    assert(actual ==4);
 }
 
 static void test_lowest_card()
 {
     auto actual = lowest_card(hand,  Suit::SPADES);
-    assert(actual == Card(Rank::TEN, Suit::SPADES));
+    assert(actual == 0);
     actual = lowest_card(hand,  Suit::CLUBS);
-    assert(actual == Card(Rank::TEN, Suit::SPADES));
+    assert(actual ==0);
 
     actual = lowest_card(hand,  Suit::SPADES);
-    assert(actual == Card(Rank::TEN, Suit::SPADES));
+    assert(actual == 0);
     actual = lowest_card(hand,  Suit::CLUBS);
-    assert(actual == Card(Rank::TEN, Suit::SPADES));
+    assert(actual == 0);
 }
 
 static void test_play_card()
 {
     Card led_card(Rank::NINE, Suit::SPADES);
     auto actual = play_card(hand, led_card, Suit::SPADES);
-    assert(actual == Card(Rank::ACE, Suit::SPADES));
+    assert(actual == 4);
     actual = play_card(hand, led_card, Suit::CLUBS);
-    assert(actual == Card(Rank::ACE, Suit::SPADES));
+    assert(actual == 4);
 
     led_card = Card(Rank::NINE, Suit::CLUBS);
     actual = play_card(hand, led_card, Suit::SPADES);
-    assert(actual == Card(Rank::TEN, Suit::SPADES));
+    assert(actual == 0);
     actual = play_card(hand, led_card, Suit::CLUBS);
-    assert(actual == Card(Rank::TEN, Suit::SPADES));
+    assert(actual == 0);
 }
 
 int main()
