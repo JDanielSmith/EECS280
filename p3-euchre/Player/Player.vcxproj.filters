@@ -18,15 +18,21 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\p2-cv\Matrix.cpp">
+    <ClCompile Include="..\p3-euchre\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\p3-euchre\Player_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="..\p3-euchre\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\p2-cv\Matrix.h">
+    <ClInclude Include="..\p3-euchre\pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\starter-files\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -44,8 +44,10 @@
 
 #pragma warning(push)
 #pragma warning(disable: 26814) // The const variable '...' can be computed at compile-time. Consider using constexpr (con.5).
+#pragma warning(disable: 4619) // #pragma warning : there is no warning number '...'
+#pragma warning(disable: 5264) // '...': '...' variable is not used
 
-#include "Matrix.h"
+#include "processing.h"
 
 #pragma warning(pop)
 
