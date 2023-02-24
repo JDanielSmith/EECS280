@@ -11,14 +11,12 @@
 #pragma warning(push)
 #pragma warning(disable: 4619) // #pragma warning : there is no warning number '...'
 #pragma warning(disable: 5264) // '...': '...' variable is not used
-#pragma warning(disable: 5262) // implicit fall-through occurs here; are you missing a break statement? Use [[fallthrough]] when a break statement is intentionally omitted between cases
 #include <string>
 #include <vector>
 #include <iostream>
 #include <cassert>
 #include <tuple>
 #include <sstream>
-#include <algorithm>
 #pragma warning(pop)
 #include <map>
 #include <utility>
@@ -46,6 +44,8 @@
 #pragma warning(disable: 26814) // The const variable '...' can be computed at compile-time. Consider using constexpr (con.5).
 
 #include "Matrix.h"
+#include "Image.h"
+#include "processing.h"
 
 #pragma warning(pop)
 

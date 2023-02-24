@@ -348,3 +348,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Generated files
+p2-cv/starter-files/*.out.txt
+p2-cv/starter-files/*.out.ppm
+

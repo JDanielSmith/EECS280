@@ -43,9 +43,11 @@
 #pragma warning(disable: 5039) // '...': pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc. Undefined behavior may occur
 
 #pragma warning(push)
+#pragma warning(disable: 4619) // #pragma warning : there is no warning number '...'
+#pragma warning(disable: 5264) // '...': '...' variable is not used
 #pragma warning(disable: 26814) // The const variable '...' can be computed at compile-time. Consider using constexpr (con.5).
 
-#include "Matrix.h"
+#include "Image.h"
 
 #pragma warning(pop)
 
