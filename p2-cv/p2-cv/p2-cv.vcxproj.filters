@@ -74,8 +74,5 @@
     <ClInclude Include="C:\Users\JDani\source\repos\eecs280\p2-cv\p2-cv\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="unit_test_framework_.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
