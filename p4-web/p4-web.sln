@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "p4-web", "p4-web\p4-web.vcxproj", "{82F968DF-B9F2-49F9-8D81-AB1AC8E144BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "starter-files", "starter-files", "{ED682631-21CB-4C00-A2E0-A4E8086FFFA6}"
+	ProjectSection(SolutionItems) = preProject
+		starter-files\index.css = starter-files\index.css
+		starter-files\index.html = starter-files\index.html
+		starter-files\json.hpp = starter-files\json.hpp
+		starter-files\List.h.starter = starter-files\List.h.starter
+		starter-files\List_compile_check.cpp = starter-files\List_compile_check.cpp
+		starter-files\List_public_test.cpp = starter-files\List_public_test.cpp
+		starter-files\List_tests.cpp = starter-files\List_tests.cpp
+		starter-files\Makefile = starter-files\Makefile
+		starter-files\public_error01.in = starter-files\public_error01.in
+		starter-files\public_error01.out.correct = starter-files\public_error01.out.correct
+		starter-files\server.py = starter-files\server.py
+		starter-files\test01.in = starter-files\test01.in
+		starter-files\test01.out.correct = starter-files\test01.out.correct
+		starter-files\test02.in = starter-files\test02.in
+		starter-files\test02.out.correct = starter-files\test02.out.correct
+		starter-files\test03.in = starter-files\test03.in
+		starter-files\test03.out.correct = starter-files\test03.out.correct
+		starter-files\test04.in = starter-files\test04.in
+		starter-files\test04.out.correct = starter-files\test04.out.correct
+		starter-files\test05.in = starter-files\test05.in
+		starter-files\test05.out.correct = starter-files\test05.out.correct
+		starter-files\unit_test_framework.h = starter-files\unit_test_framework.h
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82F968DF-B9F2-49F9-8D81-AB1AC8E144BD}.Debug|x64.ActiveCfg = Debug|x64
+		{82F968DF-B9F2-49F9-8D81-AB1AC8E144BD}.Debug|x64.Build.0 = Debug|x64
+		{82F968DF-B9F2-49F9-8D81-AB1AC8E144BD}.Debug|x86.ActiveCfg = Debug|Win32
+		{82F968DF-B9F2-49F9-8D81-AB1AC8E144BD}.Debug|x86.Build.0 = Debug|Win32
+		{82F968DF-B9F2-49F9-8D81-AB1AC8E144BD}.Release|x64.ActiveCfg = Release|x64
+		{82F968DF-B9F2-49F9-8D81-AB1AC8E144BD}.Release|x64.Build.0 = Release|x64
+		{82F968DF-B9F2-49F9-8D81-AB1AC8E144BD}.Release|x86.ActiveCfg = Release|Win32
+		{82F968DF-B9F2-49F9-8D81-AB1AC8E144BD}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F11312C-A74F-4EAE-A367-25861E1151D4}
+	EndGlobalSection
+EndGlobal
