@@ -1,5 +1,7 @@
 #ifndef LIST_H
 #define LIST_H
+#pragma once
+
 /* List.h
  *
  * doubly-linked, double-ended list with Iterator interface
@@ -13,9 +15,8 @@
 
 
 template <typename T>
-class List {
+struct List final {
   //OVERVIEW: a doubly-linked, double-ended list with Iterator interface
-public:
 
   //EFFECTS:  returns true if the list is empty
   bool empty() const;
@@ -60,9 +61,10 @@ public:
 
 private:
   //a private type
-  struct Node {
-    Node *next;
-    Node *prev;
+  struct Node final
+  {
+    Node *next = nullptr;
+    Node *prev = nullptr;
     T datum;
   };
 
@@ -70,12 +72,13 @@ private:
   //EFFECTS:  copies all nodes from other to this
   void copy_all(const List<T> &other);
 
-  Node *first;   // points to first Node in list, or nullptr if list is empty
-  Node *last;    // points to last Node in list, or nullptr if list is empty
+  Node *first = nullptr;   // points to first Node in list, or nullptr if list is empty
+  Node *last = nullptr;    // points to last Node in list, or nullptr if list is empty
 
 public:
   ////////////////////////////////////////
-  class Iterator {
+  struct Iterator final
+  {
     //OVERVIEW: Iterator interface to List
 
     // You should add in a default constructor, destructor, copy constructor,
@@ -86,7 +89,6 @@ public:
     // Your iterator should implement the following public operators: *,
     // ++ (prefix), default constructor, == and !=.
 
-  public:
     // This operator will be used to test your code. Do not modify it.
     // Requires that the current element is dereferenceable.
     Iterator& operator--() {
@@ -96,7 +98,7 @@ public:
     }
 
   private:
-    Node *node_ptr; //current Iterator position is a List node
+    Node *node_ptr = nullptr; //current Iterator position is a List node
     // add any additional necessary member variables here
 
     // add any friend declarations here
