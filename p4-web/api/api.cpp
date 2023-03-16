@@ -11,20 +11,18 @@
 #include <stdexcept>
 #include <tuple>
 
+#include "json.hpp"
+
 template<typename T>
 using list = std::list<T>;
 
-
-struct OHQueue final
+struct Student final
 {
+    std::string uniqname;
+    std::string location;
 
-private:
-    struct Student final
-    {
-
-    };
-    list<Student> queue;
 };
+list<Student> queue;
 
 enum class HttpStatus
 {
@@ -89,8 +87,13 @@ static int Get_api(std::istream& cin, std::ostream& cout)
     {
         return EXIT_FAILURE;
     }
-    std::string line;
-    std::getline(cin, line);
+    std::string blank;
+    std::getline(cin, blank);
+    if (!blank.empty())
+    {
+        return EXIT_FAILURE;
+    }
+
     static const std::string api =
         "{\n"
         "    \"queue_head_url\": \"http://localhost/queue/head/\",\n"
@@ -120,12 +123,36 @@ int Get(const std::string& path, std::istream& cin, std::ostream& cout)
     return EXIT_FAILURE;
 }
 
-int Post(const std::string& path, std::istream& cin)
+int Post(const std::string& path, std::istream& cin, std::ostream& cout)
 {
     if (path != "/api/queue/tail/")
     {
         return EXIT_FAILURE;
     }
+
+    const auto content_length = Request(cin);
+    if (content_length <= 0)
+    {
+        return EXIT_FAILURE;
+    }
+    nlohmann::json content;
+    cin >> content;
+    std::string blank;
+    std::getline(cin, blank);
+    if (!blank.empty())
+    {
+        return EXIT_FAILURE;
+    }
+
+    const Student s{ content["uniqname"],  content["location"] };
+    queue.push_back(s);
+
+    nlohmann::json response;
+    response["location"] = s.location;
+    response["position"] = queue.size();
+    response["uniqname"] = s.uniqname;
+    Response(HttpStatus::Created, cout, response.dump(4) + "\n");
+
     return EXIT_SUCCESS;
 }
 
@@ -141,7 +168,13 @@ int Delete(const std::string& path, std::istream& cin)
 int BadRequest(std::istream& cin, std::ostream& cout)
 {
     // "... read the remainder of the request, including any headers or body ..."
-    std::ignore = Request(cin);
+    auto content_length = Request(cin);
+    while ((cin) && (content_length > 0))
+    {
+        char unused;
+        cin >> unused;
+        content_length--;
+    }
 
     // "Then, return the following response after reading the entire request. ..."
     Response(HttpStatus::BadRequest, cout, "");
@@ -196,7 +229,7 @@ static int process(const std::string& line, std::istream& cin, std::ostream& cou
     }
     if (method == "POST")
     {
-        return Post(path, cin);
+        return Post(path, cin, cout);
     }
     if (method == "DELETE")
     {
