@@ -198,6 +198,15 @@ Response createResponse_BadRequest()
     return retval;
 }
 
+static auto to_json(const Student& s, size_t position)
+{
+    nlohmann::json retval;
+    retval["location"] = s.location;
+    retval["position"] = position;
+    retval["uniqname"] = s.uniqname;
+    return retval;
+}
+
 Response createResponse_GET(const Request& request)
 {
     if (request.path == "/api/")
@@ -208,13 +217,31 @@ Response createResponse_GET(const Request& request)
           {"queue_tail_url", "http://localhost/queue/tail/"} };
         return Response(HttpStatus::OK, content);
     }
+
     if (request.path == "/api/queue/head/")
     {
-        throw std::logic_error("not implemented");
+        // "If the queue is empty, return a 400 error."
+        if (queue.empty())
+        {
+            return createResponse_BadRequest();
+        }
+
+        const auto& student = queue.front();
+        const auto response = to_json(student, 1);
+        return Response(HttpStatus::OK, response);
     }
+
     if (request.path == "/api/queue/")
     {
-        throw std::logic_error("not implemented");
+        nlohmann::json response{ {"count", queue.size()}, {"results",{}} };
+        int position = 1;
+        for (const auto& item : queue)
+        {
+            auto content = to_json(item, position++);
+            response["results"].push_back(std::move(content));
+        }
+
+        return Response(HttpStatus::OK, response);
     }
 
     return createResponse_BadRequest();
@@ -231,10 +258,7 @@ Response createResponse_POST(const Request& request)
     const Student s{ body["uniqname"],  body["location"] };
     queue.push_back(s);
 
-    nlohmann::json response;
-    response["location"] = s.location;
-    response["position"] = queue.size();
-    response["uniqname"] = s.uniqname;
+    const auto response = to_json(s, queue.size());
     return Response(HttpStatus::Created, response);
 }
 
@@ -245,7 +269,14 @@ Response createResponse_DELETE(const Request& request)
         return createResponse_BadRequest();
     }
 
-    throw std::logic_error("not implemented");
+    // "If the queue is empty, return a 400 error."
+    if (queue.empty())
+    {
+        return createResponse_BadRequest();
+    }
+
+    queue.pop_front();
+    return Response(HttpStatus::NoContent);
 }
 
 Response createResponse(const Request& request)
