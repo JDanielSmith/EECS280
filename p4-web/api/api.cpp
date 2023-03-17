@@ -122,7 +122,6 @@ static bool get_method_and_path(const std::string& line, std::string& method, st
     return !(path.empty() || http.empty());
 }
 
-
 static std::optional<Request> getRequest()
 {
     if (!std::cin)
@@ -166,44 +165,14 @@ static std::optional<Request> getRequest()
     if (content_length > 0)
     {
         std::cin >> retval.body;
+        std::getline(std::cin, blank);
+        if (!blank.empty())
+        {
+            return std::nullopt;
+        }
     }
 
     return retval;
-}
-
-static int getRequest(std::istream& cin)
-{
-    // "... your implementation can assume that these things are correct: ..."
-    std::string host;
-    std::getline(cin, host);
-    std::string content_type;
-    std::getline(cin, content_type);
-    std::string content_length;
-    std::getline(cin, content_length);
-
-    std::string blank;
-    std::getline(cin, blank);
-    if (!blank.empty())
-    {
-        return -1;
-    }
-
-    const auto space = content_length.find(' ');
-    if (space == std::string::npos)
-    {
-        return -1;
-    }
-    const auto length = content_length.substr(space + 1);
-    return std::stoi(length);
-}
-
-static void getResponse(HttpStatus status, std::ostream& cout, const std::string& content)
-{
-    cout << "HTTP/1.1 " << static_cast<int>(status) << " " << to_string(status) << "\n";
-    cout << "Content-Type: application/json; charset=utf-8\n";
-    cout << "Content-Length: " << content.length() << "\n";
-    cout << "\n";
-    cout << content;
 }
 
 static void writeResponse(const Response& response)
@@ -229,49 +198,6 @@ Response createResponse_BadRequest()
     return retval;
 }
 
-static int Get_api(std::istream& cin, std::ostream& cout)
-{
-    const auto content_length = getRequest(cin);
-    if (content_length != 0)
-    {
-        return EXIT_FAILURE;
-    }
-    std::string blank;
-    std::getline(cin, blank);
-    if (!blank.empty())
-    {
-        return EXIT_FAILURE;
-    }
-
-    static const std::string api =
-        "{\n"
-        "    \"queue_head_url\": \"http://localhost/queue/head/\",\n"
-        "    \"queue_list_url\": \"http://localhost/queue/\",\n"
-        "    \"queue_tail_url\": \"http://localhost/queue/tail/\"\n"
-        "}\n";
-    getResponse(HttpStatus::OK, cout, api);
-    return EXIT_SUCCESS;
-}
-
-int Get(const std::string& path, std::istream& cin, std::ostream& cout)
-{
-    if (path == "/api/")
-    {
-        return Get_api(cin, cout);
-    }
-
-    if (path == "/api/queue/head/")
-    {
-        return EXIT_SUCCESS;
-    }
-    if (path == "/api/queue/")
-    {
-        return EXIT_SUCCESS;
-    }
-
-    return EXIT_FAILURE;
-}
-
 Response createResponse_GET(const Request& request)
 {
     if (request.path == "/api/")
@@ -294,39 +220,6 @@ Response createResponse_GET(const Request& request)
     return createResponse_BadRequest();
 }
 
-int Post(const std::string& path, std::istream& cin, std::ostream& cout)
-{
-    if (path != "/api/queue/tail/")
-    {
-        return EXIT_FAILURE;
-    }
-
-    const auto content_length = getRequest(cin);
-    if (content_length <= 0)
-    {
-        return EXIT_FAILURE;
-    }
-    nlohmann::json content;
-    cin >> content;
-    std::string blank;
-    std::getline(cin, blank);
-    if (!blank.empty())
-    {
-        return EXIT_FAILURE;
-    }
-
-    const Student s{ content["uniqname"],  content["location"] };
-    queue.push_back(s);
-
-    nlohmann::json response;
-    response["location"] = s.location;
-    response["position"] = queue.size();
-    response["uniqname"] = s.uniqname;
-    getResponse(HttpStatus::Created, cout, response.dump(4) + "\n");
-
-    return EXIT_SUCCESS;
-}
-
 Response createResponse_POST(const Request& request)
 {
     if (request.path != "/api/queue/tail/")
@@ -343,15 +236,6 @@ Response createResponse_POST(const Request& request)
     response["position"] = queue.size();
     response["uniqname"] = s.uniqname;
     return Response(HttpStatus::Created, response);
-}
-
-int Delete(const std::string& path, std::istream& cin)
-{
-    if (path != "/api/queue/head/")
-    {
-        return EXIT_FAILURE;
-    }
-    return EXIT_SUCCESS;
 }
 
 Response createResponse_DELETE(const Request& request)
@@ -374,38 +258,6 @@ Response createResponse(const Request& request)
     default:
         throw std::logic_error("Unknown HttpMethod");
     }
-}
-
-static int process(const std::string& line, std::istream& cin, std::ostream& cout)
-{
-    std::string method, path;
-    if (!get_method_and_path(line, method, path))
-    {
-        return EXIT_FAILURE;
-    }
-
-    // "The path must exactly match one of /api/, /api/queue/, /api/queue/head/, or /api/queue/tail/, including the slashes."
-    static const std::set<std::string> valid_paths{ "/api/", "/api/queue/", "/api/queue/head/", "/api/queue/tail/" };
-    const auto it = valid_paths.find(path);
-    if (it == valid_paths.end())
-    {
-        return EXIT_FAILURE;
-    }
-
-    if (method == "GET")
-    {
-        return Get(path, cin, cout);
-    }
-    if (method == "POST")
-    {
-        return Post(path, cin, cout);
-    }
-    if (method == "DELETE")
-    {
-        return Delete(path, cin);
-    }
-
-    return EXIT_FAILURE;
 }
 
 int main()
