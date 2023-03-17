@@ -1,6 +1,8 @@
 // api.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#pragma warning(push)
+#pragma warning(disable: 4996) // '...': warning STL4036: <ciso646> is removed in C++20. ...
 #include <stdlib.h>
 
 #include <iostream>
@@ -10,8 +12,10 @@
 #include <set>
 #include <stdexcept>
 #include <tuple>
+#include <optional>
 
 #include "json.hpp"
+#pragma warning(pop)
 
 template<typename T>
 using list = std::list<T>;
@@ -20,9 +24,44 @@ struct Student final
 {
     std::string uniqname;
     std::string location;
-
 };
 list<Student> queue;
+
+enum class HttpMethod
+{
+    GET, POST, DELETE
+};
+static HttpMethod to_HttpMethod(const std::string& method)
+{
+    if (method == "GET")
+    {
+        return HttpMethod::GET;
+    }
+    if (method == "POST")
+    {
+        return HttpMethod::POST;
+    }
+    if (method == "DELETE")
+    {
+        return HttpMethod::DELETE;
+    }
+
+    throw std::invalid_argument("Unknown 'method': " + method);
+}
+
+struct Request final
+{
+    HttpMethod method;
+    std::string path;
+    //std::vector<std::string> headers;
+    nlohmann::json body;
+
+    Request(HttpMethod m, const std::string& p) : method(m), path(p) {}
+    Request(const Request&) = default;
+    Request& operator=(const Request&) = default;
+    Request(Request&&) = default;
+    Request& operator=(Request&&) = default;
+};
 
 enum class HttpStatus
 {
@@ -31,21 +70,108 @@ enum class HttpStatus
     NoContent = 204,
     BadRequest = 400,
 };
-
 static std::string to_string(HttpStatus status)
 {
     switch (status)
     {
     case HttpStatus::OK: return "OK";
     case HttpStatus::Created: return "Created";
-    case HttpStatus::NoContent: return "NoContent";
-    case HttpStatus::BadRequest: return "BadRequest";
+    case HttpStatus::NoContent: return "No Content";
+    case HttpStatus::BadRequest: return "Bad Request";
     default:
         throw std::logic_error("Unknown HttpStatus");
     }
 }
 
-static int Request(std::istream& cin)
+struct Response final
+{
+    HttpStatus status;
+    //std::vector<std::string> headers;
+    nlohmann::json body;
+
+    Response(HttpStatus s) : status(s) {}
+    Response(HttpStatus s, const nlohmann::json& b) : status(s), body(b) {}
+    Response(const Response&) = default;
+    Response& operator=(const Response&) = default;
+    Response(Response&&) = default;
+    Response& operator=(Response&&) = default;
+};
+
+static bool get_method_and_path(const std::string& line, std::string& method, std::string& path)
+{
+    auto space = line.find(' ');
+    if (space == std::string::npos)
+    {
+        return false;
+    }
+    method = line.substr(0, space);
+    if (method.empty())
+    {
+        return false;
+    }
+
+    path = line.substr(space + 1);
+    space = path.find(' ');
+    if (space == std::string::npos)
+    {
+        return false;
+    }
+    const auto http = path.substr(space + 1);
+    path = path.substr(0, space);
+
+    return !(path.empty() || http.empty());
+}
+
+
+static std::optional<Request> getRequest()
+{
+    if (!std::cin)
+    {
+        return std::nullopt;
+    }
+
+    std::string line;
+    std::getline(std::cin, line);
+    std::string method, path;
+    if (!get_method_and_path(line, method, path))
+    {
+        return std::nullopt;
+    }
+
+    Request retval(to_HttpMethod(method), path);
+   
+    // "... your implementation can assume that these things are correct: ..."
+    std::string header;
+    std::getline(std::cin, header);
+    //retval.headers.push_back(header); // Host:
+    std::getline(std::cin, header);
+    //retval.headers.push_back(header); // Content-Type:
+    std::getline(std::cin, header);
+    //retval.headers.push_back(header); // Content-Length:
+    const auto space = header.find(' ');
+    if (space == std::string::npos)
+    {
+        return std::nullopt;
+    }
+    const auto length = header.substr(space + 1);
+    const auto  content_length = std::stoi(length);
+
+    std::string blank;
+    std::getline(std::cin, blank);
+    if (!blank.empty())
+    {
+        return std::nullopt;
+    }
+
+    if (content_length > 0)
+    {
+        std::cin >> retval.body;
+    }
+
+    return retval;
+}
+
+static int getRequest(std::istream& cin)
 {
     // "... your implementation can assume that these things are correct: ..."
     std::string host;
@@ -71,7 +197,7 @@ static int Request(std::istream& cin)
     return std::stoi(length);
 }
 
-static void Response(HttpStatus status, std::ostream& cout, const std::string& content)
+static void getResponse(HttpStatus status, std::ostream& cout, const std::string& content)
 {
     cout << "HTTP/1.1 " << static_cast<int>(status) << " " << to_string(status) << "\n";
     cout << "Content-Type: application/json; charset=utf-8\n";
@@ -80,9 +206,32 @@ static void Response(HttpStatus status, std::ostream& cout, const std::string& c
     cout << content;
 }
 
+static void writeResponse(const Response& response)
+{
+    const auto status = response.status;
+    std::cout << "HTTP/1.1 " << static_cast<int>(status) << " " << to_string(status) << "\n";
+    std::cout << "Content-Type: application/json; charset=utf-8\n";
+
+    std::string content;
+    if (!response.body.is_null())
+    {
+        content = response.body.dump(4) + "\n";
+    }
+    std::cout << "Content-Length: " << content.length() << "\n";
+    std::cout << "\n";
+    std::cout << content;
+}
+
+Response createResponse_BadRequest()
+{
+    // "Then, return the following response after reading the entire request. ..."
+    Response retval(HttpStatus::BadRequest);
+    return retval;
+}
+
 static int Get_api(std::istream& cin, std::ostream& cout)
 {
-    const auto content_length = Request(cin);
+    const auto content_length = getRequest(cin);
     if (content_length != 0)
     {
         return EXIT_FAILURE;
@@ -100,7 +249,7 @@ static int Get_api(std::istream& cin, std::ostream& cout)
         "    \"queue_list_url\": \"http://localhost/queue/\",\n"
         "    \"queue_tail_url\": \"http://localhost/queue/tail/\"\n"
         "}\n";
-    Response(HttpStatus::OK, cout, api);
+    getResponse(HttpStatus::OK, cout, api);
     return EXIT_SUCCESS;
 }
 
@@ -123,6 +272,28 @@ int Get(const std::string& path, std::istream& cin, std::ostream& cout)
     return EXIT_FAILURE;
 }
 
+Response createResponse_GET(const Request& request)
+{
+    if (request.path == "/api/")
+    {
+        static const nlohmann::json content = {
+          {"queue_head_url","http://localhost/queue/head/"},
+          {"queue_list_url", "http://localhost/queue/"},
+          {"queue_tail_url", "http://localhost/queue/tail/"} };
+        return Response(HttpStatus::OK, content);
+    }
+    if (request.path == "/api/queue/head/")
+    {
+        throw std::logic_error("not implemented");
+    }
+    if (request.path == "/api/queue/")
+    {
+        throw std::logic_error("not implemented");
+    }
+
+    return createResponse_BadRequest();
+}
+
 int Post(const std::string& path, std::istream& cin, std::ostream& cout)
 {
     if (path != "/api/queue/tail/")
@@ -130,7 +301,7 @@ int Post(const std::string& path, std::istream& cin, std::ostream& cout)
         return EXIT_FAILURE;
     }
 
-    const auto content_length = Request(cin);
+    const auto content_length = getRequest(cin);
     if (content_length <= 0)
     {
         return EXIT_FAILURE;
@@ -151,9 +322,27 @@ int Post(const std::string& path, std::istream& cin, std::ostream& cout)
     response["location"] = s.location;
     response["position"] = queue.size();
     response["uniqname"] = s.uniqname;
-    Response(HttpStatus::Created, cout, response.dump(4) + "\n");
+    getResponse(HttpStatus::Created, cout, response.dump(4) + "\n");
 
     return EXIT_SUCCESS;
+}
+
+Response createResponse_POST(const Request& request)
+{
+    if (request.path != "/api/queue/tail/")
+    {
+        return createResponse_BadRequest();
+    }
+
+    const auto& body = request.body;
+    const Student s{ body["uniqname"],  body["location"] };
+    queue.push_back(s);
+
+    nlohmann::json response;
+    response["location"] = s.location;
+    response["position"] = queue.size();
+    response["uniqname"] = s.uniqname;
+    return Response(HttpStatus::Created, response);
 }
 
 int Delete(const std::string& path, std::istream& cin)
@@ -165,46 +354,26 @@ int Delete(const std::string& path, std::istream& cin)
     return EXIT_SUCCESS;
 }
 
-int BadRequest(std::istream& cin, std::ostream& cout)
+Response createResponse_DELETE(const Request& request)
 {
-    // "... read the remainder of the request, including any headers or body ..."
-    auto content_length = Request(cin);
-    while ((cin) && (content_length > 0))
+    if (request.path != "/api/queue/head/")
     {
-        char unused;
-        cin >> unused;
-        content_length--;
+        return createResponse_BadRequest();
     }
 
-    // "Then, return the following response after reading the entire request. ..."
-    Response(HttpStatus::BadRequest, cout, "");
-
-    return EXIT_FAILURE;
+    throw std::logic_error("not implemented");
 }
 
-static bool get_method_and_path(const std::string& line, std::string& method, std::string& path)
+Response createResponse(const Request& request)
 {
-    auto space = line.find(' ');
-    if (space == std::string::npos)
+    switch (request.method)
     {
-        return false;
+    case HttpMethod::GET: return createResponse_GET(request);
+    case HttpMethod::POST: return createResponse_POST(request);
+    case HttpMethod::DELETE: return createResponse_DELETE(request);
+    default:
+        throw std::logic_error("Unknown HttpMethod");
     }
-    method = line.substr(0, space);
-    if (method.empty())
-    {
-        return false;
-    }
-
-    path = line.substr(space+1);
-    space = path.find(' ');
-    if (space == std::string::npos)
-    {
-        return false;
-    }
-    const auto http = path.substr(space+1);
-    path = path.substr(0, space);   
-
-    return !(path.empty() || http.empty());
 }
 
 static int process(const std::string& line, std::istream& cin, std::ostream& cout)
@@ -241,15 +410,13 @@ static int process(const std::string& line, std::istream& cin, std::ostream& cou
 
 int main()
 {
-    while (std::cin)
+    auto request = getRequest();
+    while (request)
     {
-        std::string line;
-        std::getline(std::cin, line);
-        const auto retval = process(line, std::cin, std::cout);
-        if (retval != EXIT_SUCCESS)
-        {
-            return BadRequest(std::cin, std::cout);
-        }
+        const auto response = createResponse(*request);
+        writeResponse(response);
+
+        request = getRequest();
     }
 
     return EXIT_SUCCESS;
