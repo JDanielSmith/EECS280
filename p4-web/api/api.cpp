@@ -13,6 +13,8 @@
 #include <stdexcept>
 #include <tuple>
 #include <optional>
+#include <sstream>
+#include <algorithm>
 
 #include "json.hpp"
 #pragma warning(pop)
@@ -122,15 +124,15 @@ static bool get_method_and_path(const std::string& line, std::string& method, st
     return !(path.empty() || http.empty());
 }
 
-static std::optional<Request> getRequest()
+static std::optional<Request> getRequest(std::istream& cin)
 {
-    if (!std::cin)
+    if (!cin)
     {
         return std::nullopt;
     }
 
     std::string line;
-    std::getline(std::cin, line);
+    std::getline(cin, line);
     std::string method, path;
     if (!get_method_and_path(line, method, path))
     {
@@ -141,11 +143,11 @@ static std::optional<Request> getRequest()
    
     // "... your implementation can assume that these things are correct: ..."
     std::string header;
-    std::getline(std::cin, header);
+    std::getline(cin, header);
     //retval.headers.push_back(header); // Host:
-    std::getline(std::cin, header);
+    std::getline(cin, header);
     //retval.headers.push_back(header); // Content-Type:
-    std::getline(std::cin, header);
+    std::getline(cin, header);
     //retval.headers.push_back(header); // Content-Length:
     const auto space = header.find(' ');
     if (space == std::string::npos)
@@ -156,7 +158,7 @@ static std::optional<Request> getRequest()
     const auto  content_length = std::stoi(length);
 
     std::string blank;
-    std::getline(std::cin, blank);
+    std::getline(cin, blank);
     if (!blank.empty())
     {
         return std::nullopt;
@@ -164,8 +166,8 @@ static std::optional<Request> getRequest()
 
     if (content_length > 0)
     {
-        std::cin >> retval.body;
-        std::getline(std::cin, blank);
+        cin >> retval.body;
+        std::getline(cin, blank);
         if (!blank.empty())
         {
             return std::nullopt;
@@ -175,20 +177,20 @@ static std::optional<Request> getRequest()
     return retval;
 }
 
-static void writeResponse(const Response& response)
+static void writeResponse(std::ostream& cout, const Response& response)
 {
     const auto status = response.status;
-    std::cout << "HTTP/1.1 " << static_cast<int>(status) << " " << to_string(status) << "\n";
-    std::cout << "Content-Type: application/json; charset=utf-8\n";
+    cout << "HTTP/1.1 " << static_cast<int>(status) << " " << to_string(status) << "\n";
+    cout << "Content-Type: application/json; charset=utf-8\n";
 
     std::string content;
     if (!response.body.is_null())
     {
         content = response.body.dump(4) + "\n";
     }
-    std::cout << "Content-Length: " << content.length() << "\n";
-    std::cout << "\n";
-    std::cout << content;
+    cout << "Content-Length: " << content.length() << "\n";
+    cout << "\n";
+    cout << content;
 }
 
 Response createResponse_BadRequest()
@@ -291,16 +293,27 @@ Response createResponse(const Request& request)
     }
 }
 
+static void copy_stream(std::istream& input, std::ostream& output)
+{
+    std::istreambuf_iterator<std::istream::char_type> begin(input), end;
+    std::ostreambuf_iterator<std::ostream::char_type> out(output);
+    std::copy(begin, end, out);
+}
+
 int main()
 {
-    auto request = getRequest();
-    while (request)
+    std::stringstream input;
+    copy_stream(std::cin, input);
+
+    std::stringstream output;
+    while (const auto request = getRequest(input))
     {
         const auto response = createResponse(*request);
-        writeResponse(response);
-
-        request = getRequest();
+        writeResponse(output, response);
     }
+
+    output.seekp(0, std::ios_base::beg);
+    copy_stream(output, std::cout);
 
     return EXIT_SUCCESS;
 }
